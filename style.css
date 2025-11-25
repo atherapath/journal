@@ -1,36 +1,47 @@
-html, body {
+/* Neon theme only for main content */
+.markdown-body {
   background-color: #000;
   color: #0f0;
   font-family: monospace;
-  margin: 0;
   padding: 1rem;
 }
 
-p, li, h1, h2, h3, h4, h5, h6, blockquote, code, pre {
-  color: #0f0;
-}
-
-img {
+/* Keep images scaled naturally */
+.markdown-body img {
   max-width: 100%;
   height: auto;
   display: block;
   margin: 0.5rem 0;
 }
 
-a {
+/* All text green */
+.markdown-body p,
+.markdown-body li,
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6,
+.markdown-body blockquote,
+.markdown-body code,
+.markdown-body pre,
+.markdown-body a {
   color: #0f0;
-  text-decoration: underline;
 }
 
-blockquote {
-  border-left: 2px solid #0f0;
-  padding-left: 1rem;
-}
-
-pre, code {
+/* Slight background for code blocks */
+.markdown-body pre,
+.markdown-body code {
   background-color: #001;
-  color: #0f0;
   padding: 0.2rem 0.4rem;
   border-radius: 3px;
   overflow-x: auto;
+}
+
+/* Leave GitHub footer / “edit this file” alone */
+.repository-content .js-file-line-container,
+.edit-file-link-container {
+  background: inherit;
+  color: inherit;
 }
