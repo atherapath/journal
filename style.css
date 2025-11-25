@@ -1,84 +1,36 @@
-/* Full Neon Cyberpunk Lockdown */
 html, body {
-  background-color: #black !important;
-  color: #0f0 !important;
-  font-family: monospace !important;
+  background-color: #000;
+  color: #0f0;
+  font-family: monospace;
   margin: 0;
   padding: 1rem;
 }
 
-header h1 {
-  color: #0f0 !important;
-  margin-bottom: 2rem;
-  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
+p, li, h1, h2, h3, h4, h5, h6, blockquote, code, pre {
+  color: #0f0;
 }
 
-main {
-  width: 95% !important;
-  max-width: 900px !important;
-  box-sizing: border-box;
-  background-color: #000 !important;
-}
-
-details {
-  border: 2px solid #0f0 !important;
-  padding: 0.8rem;
-  margin: 1rem 0;
-  background-color: #001 !important;
-  border-radius: 6px;
-  box-shadow: 0 0 8px #0f0, 0 0 16px #0f0;
-}
-
-details > summary {
-  cursor: pointer;
-  font-weight: bold;
-  color: #0f0 !important;
-  background-color: #002 !important;
-  padding: 0.5rem;
-  border-radius: 4px;
-}
-
-details > summary:hover {
-  background-color: #033 !important;
-}
-
-details[open] {
-  padding: 1rem;
-}
-
-.md-block {
+img {
+  max-width: 100%;
+  height: auto;
   display: block;
-  width: 100% !important;
-  max-width: 100% !important;
-  border: 2px solid #0f0 !important;
-  padding: 0.5rem;
   margin: 0.5rem 0;
-  background-color: #001 !important;
-  box-sizing: border-box;
-  overflow: hidden;
-  box-shadow: 0 0 6px #0f0, 0 0 12px #0f0;
 }
 
-.md-block img {
-  display: block;
-  width: 100% !important;
-  max-width: 100% !important;
-  height: auto !important;
-  margin: 0 auto;
+a {
+  color: #0f0;
+  text-decoration: underline;
 }
 
-.md-block p, .md-block li, .md-block h2, .md-block h3 {
-  line-height: 1.5;
-  color: #0f0 !important;
-  word-wrap: break-word;
+blockquote {
+  border-left: 2px solid #0f0;
+  padding-left: 1rem;
 }
 
-@media (max-width: 600px) {
-  main, .md-block {
-    width: 95% !important;
-    padding: 0.5rem !important;
-  }
-  details > summary {
-    font-size: 1rem !important;
-  }
+pre, code {
+  background-color: #001;
+  color: #0f0;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  overflow-x: auto;
 }
