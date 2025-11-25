@@ -1,85 +1,84 @@
-/* Neon cyberpunk style */
-body {
-  background-color: #000;
-  color: #0f0;
-  font-family: monospace;
+/* Full Neon Cyberpunk Lockdown */
+html, body {
+  background-color: #000 !important;
+  color: #0f0 !important;
+  font-family: monospace !important;
+  margin: 0;
   padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 header h1 {
-  color: #0f0;
+  color: #0f0 !important;
   margin-bottom: 2rem;
+  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
 }
 
 main {
-  width: 95%;            /* responsive width */
-  max-width: 900px;      /* optional max for large screens */
+  width: 95% !important;
+  max-width: 900px !important;
   box-sizing: border-box;
+  background-color: #000 !important;
 }
 
 details {
-  border: 2px solid #0f0;
+  border: 2px solid #0f0 !important;
   padding: 0.8rem;
   margin: 1rem 0;
-  background-color: #001;
+  background-color: #001 !important;
   border-radius: 6px;
+  box-shadow: 0 0 8px #0f0, 0 0 16px #0f0;
 }
 
 details > summary {
   cursor: pointer;
   font-weight: bold;
-  color: #0f0;
-  background-color: #002;
+  color: #0f0 !important;
+  background-color: #002 !important;
   padding: 0.5rem;
   border-radius: 4px;
 }
 
 details > summary:hover {
-  background-color: #033;
+  background-color: #033 !important;
 }
 
 details[open] {
   padding: 1rem;
 }
 
-/* Image + text wrapper */
 .md-block {
-  display: block;             
-  width: 100%;                /* full width of container */
-  max-width: 100%;            /* never exceed container */
-  border: 2px solid #0f0;
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  border: 2px solid #0f0 !important;
   padding: 0.5rem;
   margin: 0.5rem 0;
-  background-color: #001;
+  background-color: #001 !important;
   box-sizing: border-box;
-  overflow: hidden;           /* prevent clipping */
+  overflow: hidden;
+  box-shadow: 0 0 6px #0f0, 0 0 12px #0f0;
 }
 
 .md-block img {
   display: block;
-  width: 100%;                /* fill container */
-  max-width: 100%;            /* scale down if needed */
-  height: auto;               /* keep aspect ratio */
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
   margin: 0 auto;
-  box-sizing: border-box;
 }
 
 .md-block p, .md-block li, .md-block h2, .md-block h3 {
   line-height: 1.5;
-  color: #0f0;
+  color: #0f0 !important;
   word-wrap: break-word;
 }
 
-/* Responsive tweaks for small screens */
 @media (max-width: 600px) {
   main, .md-block {
-    width: 95%;              /* almost full width on phones */
-    padding: 0.5rem;
+    width: 95% !important;
+    padding: 0.5rem !important;
   }
   details > summary {
-    font-size: 1rem;         /* slightly smaller summary text */
+    font-size: 1rem !important;
   }
 }
