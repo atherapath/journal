@@ -9,30 +9,6 @@ function slugToFile(slug) {
   return `${slug}.md`;
 }
 
-function wrapImageBlocks() {
-  const detailsList = document.querySelectorAll('details');
-  detailsList.forEach(details => {
-    const children = Array.from(details.children);
-    for (let i = 0; i < children.length; i++) {
-      if (children[i].tagName === 'IMG') {
-        const blockElements = [children[i]];
-        let j = i + 1;
-        while (j < children.length && children[j].tagName !== 'IMG') {
-          blockElements.push(children[j]);
-          j++;
-        }
-        const wrapper = document.createElement('div');
-        wrapper.className = 'md-block';
-        blockElements.forEach(el => wrapper.appendChild(el));
-        details.insertBefore(wrapper, blockElements[0]);
-        blockElements.forEach(el => {
-          if (el !== wrapper) el.remove();
-        });
-        i = j - 1;
-      }
-    }
-  });
-}
 
 async function loadMarkdown(slug) {
   if (!slug) {
