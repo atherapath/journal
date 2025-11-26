@@ -34,3 +34,12 @@ pre, code {
   border-radius: 3px;
   overflow-x: auto;
 }
+
+/* Add this to your existing CSS */
+#content {
+  position: relative; /* Ensure it's positioned properly */
+  padding: 1rem;
+  background-color: #111;
+  border-radius: 10px;
+  box-shadow: 0 0 20px 5px #0f0; /* Neon green glow */
+}
