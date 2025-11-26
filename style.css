@@ -29,19 +29,22 @@ a {
   text-decoration: underline;
 }
 
+details {
+  background-color: #f0f0f0; /* Light grey background */
+  padding: 10px; /* Optional padding for spacing */
+  border: 1px solid #ccc; /* Optional border for definition */
+}
+
+details summary {
+  color: #00ff00; /* Neon green text */
+  font-weight: bold; /* Make it bold for emphasis */
+}
+
+  
 blockquote {
   border-left: 2px solid #0f0;
   padding-left: 1rem;
 }
-
-.section-header {
-  background-color: #f0f0f0; /* Light gray background */
-  color: #0f0; /* Keep the text green to match the theme */
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-}
-
 
 pre, code {
   background-color: #001;
