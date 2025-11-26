@@ -6,6 +6,13 @@ html, body {
   padding: 1rem;
 }
 
+hr {
+  border: none;
+  border-top: 1px solid #0f0; /* Subtle neon green line */
+  box-shadow: 0 0 5px 1px #0f0; /* Soft glow effect */
+  margin: 1rem 0;
+}
+
 p, li, h1, h2, h3, h4, h5, h6, blockquote, code, pre {
   color: #0f0;
 }
