@@ -46,17 +46,9 @@ blockquote {
   padding-left: 1rem;
 }
 
-pre, code {
-  background-color: #001;
-  color: #0f0;
-  padding: 0.2rem 0.4rem;
-  border-radius: 3px;
-  overflow-x: auto;
-}
-
 /* For the markdown code lines */
 code, pre {
-  color: #0f0; /* Main neon green color */
+  color: #2E1B0F; /* Main neon green color */
   background-color: #001;
   padding: 0.2rem 0.4rem;
   border-radius: 3px;
