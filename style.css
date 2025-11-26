@@ -34,6 +34,15 @@ blockquote {
   padding-left: 1rem;
 }
 
+.section-header {
+  background-color: #f0f0f0; /* Light gray background */
+  color: #0f0; /* Keep the text green to match the theme */
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+
 pre, code {
   background-color: #001;
   color: #0f0;
