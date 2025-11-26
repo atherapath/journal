@@ -1,8 +1,6 @@
-## 🪶 Captain 🪵 Overview ⛵
-
 ![captain](captain.jpg)
 
-### 🗂️ Archive bug 🐛 ⚓ Anchor slug 🐌
+### Archive bug 🐛 Anchor slug 🐌
 Welcome aboard the **Athera Path Vessel**, where creation, validation, and delivery sail as one continuous route.
   
 Here, the Captain oversees the flow between thought and manifestation — from voice to document, from document to article, from article to the open network.
