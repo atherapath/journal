@@ -35,6 +35,17 @@ pre, code {
   overflow-x: auto;
 }
 
+/* For the markdown code lines */
+code, pre {
+  color: #0f0; /* Main neon green color */
+  background-color: #001;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  overflow-x: auto;
+  /* Add a subtle neon glow */
+  box-shadow: 0 0 5px 2px #0f0;
+}
+
 /* Add this to your existing CSS */
 #content {
   position: relative; /* Ensure it's positioned properly */
