@@ -14,7 +14,7 @@ hr {
 }
 
 h1, h2, h3, h4, h5, h6, code, pre {
-  color: #0f0;
+  color: #FFFFFF;
 }
 
 img {
@@ -30,7 +30,7 @@ a {
 }
 
 details {
-  background-color: #A67C52; /* Light grey background */
+  background-color: #004F1F; /* Light grey background */
   padding: 10px; /* Optional padding for spacing */
   border: 1px solid #ccc; /* Optional border for definition */
 }
