@@ -1,23 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atherapath Weekly Journal</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head>
-<body>
-  <header>
-  </header>
+const content = document.getElementById('content');
 
-  <main id="content">
-    <p>Loading content...</p>
-  </main>
-<div class="week-nav">
-  <button id="prev-week">⬅️ Previous Week</button>
-  <button id="next-week">➡️ Next Week</button>
-</div>
-  <script src="script.js"></script>
-</body>
-</html>
+function getSlugFromHash() {
+  return window.location.hash ? window.location.hash.slice(1) : null;
+}
+
+function slugToFile(slug) {
+  if (!slug) return null;
+  return `${slug}.md`;
+}
+
+function wrapImageBlocks() {
+  const detailsList = document.querySelectorAll('details');
+  detailsList.forEach(details => {
+    const children = Array.from(details.children);
+    for (let i = 0; i < children.length; i++) {
+      if (children[i].tagName === 'IMG') {
+        const blockElements = [children[i]];
+        let j = i + 1;
+        while (j < children.length && children[j].tagName !== 'IMG') {
+          blockElements.push(children[j]);
+          j++;
+        }
+        const wrapper = document.createElement('div');
+        wrapper.className = 'md-block';
+        blockElements.forEach(el => wrapper.appendChild(el));
+        details.insertBefore(wrapper, blockElements[0]);
+        blockElements.forEach(el => {
+          if (el !== wrapper) el.remove();
+        });
+        i = j - 1;
+      }
+    }
+  });
+}
+
+async function loadMarkdown(slug) {
+  if (!slug) {
+    content.innerHTML = `<p style="color:red;">No hash provided in URL</p>`;
+    return;
+  }
+
+  const file = slugToFile(slug);
+
+  try {
+    const res = await fetch(file);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const mdText = await res.text();
+    const html = marked.parse(mdText);
+
+    content.innerHTML = html;
+    wrapImageBlocks();
+  } catch (err) {
+    content.innerHTML = `<p style="color:red;">Failed to load ${file}: ${err.message}</p>`;
+    console.error(err);
+  }
+}
+
+// --- Slug parsing for WWDDYY format ---
+function parseSlug(slug) {
+  // Expect format WWDDYY, e.g. "471125"
+  const match = slug.match(/^(\d{2})(\d{2})(\d{2})$/);
+  if (!match) return null;
+
+  return {
+    week: parseInt(match[1], 10),
+    day: parseInt(match[2], 10),
+    year: 2000 + parseInt(match[3], 10) // "25" → 2025
+  };
+}
+
+function buildSlug(week, day, year) {
+  const ww = String(week).padStart(2, '0');
+  const dd = String(day).padStart(2, '0');
+  const yy = String(year % 100).padStart(2, '0');
+  return `${ww}${dd}${yy}`;
+}
+
+function updateWeekNavigation(slug) {
+  const nav = parseSlug(slug);
+  if (!nav) return;
+
+  // For now, assume each week jumps 7 days forward/back
+  const prevWeek = nav.week - 1;
+  const nextWeek = nav.week + 1;
+  const prevDay = nav.day - 7;
+  const nextDay = nav.day + 7;
+
+  document.getElementById('prev-week').onclick = () => {
+    const newSlug = buildSlug(prevWeek, prevDay, nav.year);
+    window.location.hash = newSlug;
+  };
+
+  document.getElementById('next-week').onclick = () => {
+    const newSlug = buildSlug(nextWeek, nextDay, nav.year);
+    window.location.hash = newSlug;
+  };
+}
+
+// --- Initial load and listener ---
+let slug = getSlugFromHash();
+loadMarkdown(slug);
+updateWeekNavigation(slug);
+
+window.addEventListener('hashchange', () => {
+  slug = getSlugFromHash();
+  loadMarkdown(slug);
+  updateWeekNavigation(slug);
+});
