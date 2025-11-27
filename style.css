@@ -8,8 +8,8 @@ html, body {
 
 hr {
   border: none;
-  border-top: 1px solid #0f0; /* Subtle neon green line */
-  box-shadow: 0 0 5px 1px #0f0; /* Soft glow effect */
+  border-top: 1px solid #0f0;
+  box-shadow: 0 0 5px 1px #0f0;
   margin: 1rem 0;
 }
 
@@ -30,38 +30,57 @@ a {
 }
 
 details {
-  background-color: #004F1F; /* Light grey background */
-  padding: 10px; /* Optional padding for spacing */
-  border: 1px solid #ccc; /* Optional border for definition */
+  background-color: #004F1F;
+  padding: 10px;
+  border: 1px solid #ccc;
 }
 
 details summary {
-  color: #FFFFFF; /* Neon green text */
-  font-weight: bold; /* Make it bold for emphasis */
+  color: #FFFFFF;
+  font-weight: bold;
 }
 
-  
 blockquote {
   border-left: 2px solid #0f0;
   padding-left: 1rem;
 }
 
-/* For the markdown code lines */
 code, pre {
-  color: #2E1B0F; /* Main neon green color */
+  color: #2E1B0F;
   background-color: #001;
   padding: 0.2rem 0.4rem;
   border-radius: 3px;
   overflow-x: auto;
-  /* Add a subtle neon glow */
   box-shadow: 0 0 5px 2px #0f0;
 }
 
-/* Add this to your existing CSS */
 #content {
-  position: relative; /* Ensure it's positioned properly */
+  position: relative;
   padding: 1rem;
   background-color: #111;
   border-radius: 10px;
-  box-shadow: 0 0 20px 5px #0f0; /* Neon green glow */
+  box-shadow: 0 0 20px 5px #0f0;
+}
+
+/* Week navigation styling */
+.week-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.week-nav button {
+  flex: 1;
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: #0f0;
+  color: #000;
+  border: 2px solid #222;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.week-nav button:hover {
+  background-color: #1f1;
 }
