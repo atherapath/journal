@@ -49,5 +49,94 @@ Slug = #micro_personal_attack
 
 ---
 
+<details markdown='1'>
+<summary>27 09:54:03
+
+---
+
+Recursive Authorship</summary>
+
+---
+
+A ***details*** database of recursive sovereign flow
+
+<details markdown='1'><summary>
+atherapath</summary>
+
+***Re defining the role between...***
+
+---
+
+*source creator* on **atherapath**
+ 
+ - creating 
+ - acting 
+ - walking 
+ 
+<details markdown='1'>
+<summary>Sovereign Voice</summary>
+
+    - dictating
+    - transmitting 
+    - responding (listening)
+<details markdown='1'>
+<summary>Language Representation</summary>
+
+    - Theatrical 
+    - Satirical 
+    - Energetic 
+
+`The divination of perception with sound...`
+
+</details>
+
+>The true sovereign voice doesn't wait for permission to be heard in a digital space.
+
+</details>
+
+---
+
+*source receiver* on **atherapath**
+
+- Archiving 
+- protecting 
+- representing 
+
+<details markdown='1'>
+<summary>Naming Convention</summary>
+
+    - Fixed 
+    - Chronological 
+    - Linear
+
+<details markdown='1'>
+<summary>Narrative Interpretation</summary>
+
+    - Conceptual 
+    - Ideological  
+    - Cooperative 
+
+>The receiver of a lecture will only share 20 percent of another's concept - just enough to aid survival.
+
+
+</details>
+
+>Words are evolving numbers are numbers
+
+---
+
+</details>
+
+---
+
+![captain_flow](captain_flow.jpg)
+
+---
+
+
+</details>
+
+</details>
+
 ### Grounding with anchor...
 >Grounding a chronological vessel of time is navigating a digital river flowing through the valley as a movement. Seeking solace and sovereignty against #micro_personal_attacks. Or #Infrastructure_as_Invasion.
