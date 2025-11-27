@@ -15,7 +15,15 @@ This is the **Captain’s Workflow**.
 
 ---
 
-### The vessel...
+<details markdown='1'>
+<summary>The Vessel...
+
+---
+
+Waddy</summary>
+
+---
+
 The files on board the vessel follow a strict naming convention.  wwddyy (waddy 😉) will always point do the corresponding file.
 
 `eg #471725 slug will spawn data from 471725.md`
@@ -32,8 +40,18 @@ Which will serve as another slug to the corresponding weekly file.
 
 >Numbers speak the history.  Words speak the meaning.
 
-### sovereign voice...
-#captain
+---
+
+</details>
+
+---
+
+<details markdown='1'>
+<summary>Sovereign Voice
+
+---
+
+#captain</summary>
 
 This logic shows that the Captain’s Log stands on its own, an anchor translating number into meaning without relying on the word-system.
 
@@ -49,12 +67,16 @@ Slug = #micro_personal_attack
 
 ---
 
-<details markdown='1'>
-<summary>27 09:54:03
+</details>
 
 ---
 
-Recursive Authorship</summary>
+<details markdown='1'>
+<summary>Recursive Authorship
+
+---
+
+27 09:54:03</summary>
 
 ---
 
