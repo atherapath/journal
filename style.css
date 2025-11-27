@@ -46,11 +46,10 @@ blockquote {
 }
 
 code, pre {
-  color: #2E1B0F;
+  color: #0f0;
   background-color: #001;
   padding: 0.2rem 0.4rem;
   border-radius: 3px;
-  overflow-x: auto;
   box-shadow: 0 0 5px 2px #0f0;
 }
 
