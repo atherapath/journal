@@ -1,94 +1,20 @@
-const content = document.getElementById('content');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atherapath Weekly Journal</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <header>
+  </header>
 
-function getSlugFromHash() {
-  return window.location.hash ? window.location.hash.slice(1) : null;
-}
+  <main id="content">
+    <p>Loading content...</p>
+  </main>
 
-function slugToFile(slug) {
-  if (!slug) return null;
-  return `${slug}.md`;
-}
-
-function wrapImageBlocks() {
-  const detailsList = document.querySelectorAll('details');
-  detailsList.forEach(details => {
-    const children = Array.from(details.children);
-    for (let i = 0; i < children.length; i++) {
-      if (children[i].tagName === 'IMG') {
-        const blockElements = [children[i]];
-        let j = i + 1;
-        while (j < children.length && children[j].tagName !== 'IMG') {
-          blockElements.push(children[j]);
-          j++;
-        }
-        const wrapper = document.createElement('div');
-        wrapper.className = 'md-block';
-        blockElements.forEach(el => wrapper.appendChild(el));
-        details.insertBefore(wrapper, blockElements[0]);
-        blockElements.forEach(el => {
-          if (el !== wrapper) el.remove();
-        });
-        i = j - 1;
-      }
-    }
-  });
-}
-
-async function loadMarkdown(slug) {
-  if (!slug) {
-    content.innerHTML = `<p style="color:red;">No hash provided in URL</p>`;
-    return;
-  }
-
-  const file = slugToFile(slug);
-
-  try {
-    const res = await fetch(file);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const mdText = await res.text();
-    const html = marked.parse(mdText);
-
-    content.innerHTML = html;
-    wrapImageBlocks();
-  } catch (err) {
-    content.innerHTML = `<p style="color:red;">Failed to load ${file}: ${err.message}</p>`;
-    console.error(err);
-  }
-}
-
-// --- Week navigation helpers ---
-function changeWeek(slug, direction) {
-  if (!slug) return;
-
-  // Slug format: WWDDYY (e.g. "481125")
-  const week = parseInt(slug.slice(0, 2), 10);
-  const rest = slug.slice(2); // keep DDYY untouched
-
-  const newWeek = String(week + direction).padStart(2, '0');
-  const newSlug = `${newWeek}${rest}`;
-
-  window.location.hash = newSlug;
-}
-
-function updateWeekButtons(slug) {
-  const prevBtn = document.getElementById('prev-week');
-  const nextBtn = document.getElementById('next-week');
-
-  if (prevBtn) {
-    prevBtn.onclick = () => changeWeek(slug, -1);
-  }
-  if (nextBtn) {
-    nextBtn.onclick = () => changeWeek(slug, +1);
-  }
-}
-
-// --- Initial load and listener ---
-let slug = getSlugFromHash();
-loadMarkdown(slug);
-updateWeekButtons(slug);
-
-window.addEventListener('hashchange', () => {
-  slug = getSlugFromHash();
-  loadMarkdown(slug);
-  updateWeekButtons(slug);
-});
+  <script src="script.js"></script>
+</body>
+</html>
