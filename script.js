@@ -34,7 +34,6 @@ function wrapImageBlocks() {
   });
 }
 
-
 async function loadMarkdown(slug) {
   if (!slug) {
     content.innerHTML = `<p style="color:red;">No hash provided in URL</p>`;
@@ -57,10 +56,35 @@ async function loadMarkdown(slug) {
   }
 }
 
+// 🔑 New helper functions
+function getWeekFromSlug(slug) {
+  const match = slug.match(/(\d{4})_w(\d{1,2})/);
+  if (!match) return null;
+  return { year: parseInt(match[1]), week: parseInt(match[2]) };
+}
+
+function updateWeekNavigation(slug) {
+  const nav = getWeekFromSlug(slug);
+  if (!nav) return;
+
+  const prevWeek = nav.week - 1;
+  const nextWeek = nav.week + 1;
+
+  document.getElementById('prev-week').onclick = () => {
+    window.location.hash = `${nav.year}_w${prevWeek}_log`;
+  };
+
+  document.getElementById('next-week').onclick = () => {
+    window.location.hash = `${nav.year}_w${nextWeek}_log`;
+  };
+}
+
 let slug = getSlugFromHash();
 loadMarkdown(slug);
+updateWeekNavigation(slug); // 🔑 initial button setup
 
 window.addEventListener('hashchange', () => {
   slug = getSlugFromHash();
   loadMarkdown(slug);
+  updateWeekNavigation(slug); // 🔑 refresh buttons on change
 });
