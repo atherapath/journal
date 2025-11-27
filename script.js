@@ -60,23 +60,25 @@ async function loadMarkdown(slug) {
 function updateWeekButtons(slug) {
   const prevBtn = document.getElementById('prev-week');
   const nextBtn = document.getElementById('next-week');
-
   if (!slug) return;
 
   const week = parseInt(slug.slice(0, 2), 10);
-  const rest = slug.slice(2);
+  const day = parseInt(slug.slice(2, 4), 10);
+  const year = slug.slice(4); // YY stays as-is
 
   if (prevBtn) {
     prevBtn.onclick = () => {
       const newWeek = String(week - 1).padStart(2, '0');
-      window.location.hash = `${newWeek}${rest}`;
+      const newDay = String(day - 7).padStart(2, '0');
+      window.location.hash = `${newWeek}${newDay}${year}`;
     };
   }
 
   if (nextBtn) {
     nextBtn.onclick = () => {
       const newWeek = String(week + 1).padStart(2, '0');
-      window.location.hash = `${newWeek}${rest}`;
+      const newDay = String(day + 7).padStart(2, '0');
+      window.location.hash = `${newWeek}${newDay}${year}`;
     };
   }
 }
