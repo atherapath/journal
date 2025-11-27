@@ -65,3 +65,30 @@ code, pre {
   border-radius: 10px;
   box-shadow: 0 0 20px 5px #0f0; /* Neon green glow */
 }
+
+.week-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #111;
+  border-radius: 8px;
+  box-shadow: 0 0 10px 2px #0f0;
+}
+
+.week-nav button {
+  flex: 1;
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: #0f0;
+  color: #000;
+  border: 2px solid #222;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.week-nav button:hover {
+  background-color: #1f1;
+}
