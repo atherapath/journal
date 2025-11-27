@@ -56,54 +56,39 @@ async function loadMarkdown(slug) {
   }
 }
 
-// --- Slug parsing for WWDDYY format ---
-function parseSlug(slug) {
-  // Expect format WWDDYY, e.g. "471125"
-  const match = slug.match(/^(\d{2})(\d{2})(\d{2})$/);
-  if (!match) return null;
+// --- Week navigation helpers ---
+function changeWeek(slug, direction) {
+  if (!slug) return;
 
-  return {
-    week: parseInt(match[1], 10),
-    day: parseInt(match[2], 10),
-    year: 2000 + parseInt(match[3], 10) // "25" → 2025
-  };
+  // Slug format: WWDDYY (e.g. "481125")
+  const week = parseInt(slug.slice(0, 2), 10);
+  const rest = slug.slice(2); // keep DDYY untouched
+
+  const newWeek = String(week + direction).padStart(2, '0');
+  const newSlug = `${newWeek}${rest}`;
+
+  window.location.hash = newSlug;
 }
 
-function buildSlug(week, day, year) {
-  const ww = String(week).padStart(2, '0');
-  const dd = String(day).padStart(2, '0');
-  const yy = String(year % 100).padStart(2, '0');
-  return `${ww}${dd}${yy}`;
-}
+function updateWeekButtons(slug) {
+  const prevBtn = document.getElementById('prev-week');
+  const nextBtn = document.getElementById('next-week');
 
-function updateWeekNavigation(slug) {
-  const nav = parseSlug(slug);
-  if (!nav) return;
-
-  // For now, assume each week jumps 7 days forward/back
-  const prevWeek = nav.week - 1;
-  const nextWeek = nav.week + 1;
-  const prevDay = nav.day - 7;
-  const nextDay = nav.day + 7;
-
-  document.getElementById('prev-week').onclick = () => {
-    const newSlug = buildSlug(prevWeek, prevDay, nav.year);
-    window.location.hash = newSlug;
-  };
-
-  document.getElementById('next-week').onclick = () => {
-    const newSlug = buildSlug(nextWeek, nextDay, nav.year);
-    window.location.hash = newSlug;
-  };
+  if (prevBtn) {
+    prevBtn.onclick = () => changeWeek(slug, -1);
+  }
+  if (nextBtn) {
+    nextBtn.onclick = () => changeWeek(slug, +1);
+  }
 }
 
 // --- Initial load and listener ---
 let slug = getSlugFromHash();
 loadMarkdown(slug);
-updateWeekNavigation(slug);
+updateWeekButtons(slug);
 
 window.addEventListener('hashchange', () => {
   slug = getSlugFromHash();
   loadMarkdown(slug);
-  updateWeekNavigation(slug);
+  updateWeekButtons(slug);
 });
