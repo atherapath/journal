@@ -1,93 +1,95 @@
-/**
- * Captain's Weekly Navigation JS
- * Handles Previous Week and Current Week buttons
- * Works with numeric weekly slugs (wwddyy)
- */
+const content = document.getElementById('content');
 
-// Utility: get today's week number in wwddyy format
-function getCurrentWeekSlug() {
-    const today = new Date();
-    const day = String(today.getDate()).padStart(2, '0');
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const year = String(today.getFullYear()).slice(-2);
-    // wwddyy: week number + day + year
-    const weekNumber = getWeekNumber(today);
-    return `${weekNumber}${day}${year}`;
+function getSlugFromHash() {
+  return window.location.hash ? window.location.hash.slice(1) : null;
 }
 
-// Calculate ISO week number
-function getWeekNumber(d) {
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    const dayNum = d.getUTCDay() || 7;
-    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    const weekNum = Math.ceil((((d - yearStart) / 86400000) + 1)/7);
-    return String(weekNum).padStart(2, '0');
+function slugToFile(slug) {
+  if (!slug) return null;
+  return `${slug}.md`;
 }
 
-// Extract numeric slug from URL hash
-function getCurrentSlug() {
-    const hash = window.location.hash.substring(1); // remove #
-    if (/^\d+$/.test(hash)) return hash; // numeric slug
-    return null; // non-numeric
-}
-
-// Navigate to a given numeric weekly slug
-function goToSlug(slug) {
-    if (!slug) return;
-    // Here you can implement logic to fetch/load the corresponding MD content
-    // For example, assuming sections are already on the page and using IDs
-    const target = document.querySelector(`#${slug}`);
-    if (target) {
-        target.scrollIntoView({behavior: 'smooth'});
-        // Optionally update URL hash
-        window.location.hash = slug;
-    } else {
-        console.warn(`Slug #${slug} not found on page.`);
+function wrapImageBlocks() {
+  const detailsList = document.querySelectorAll('details');
+  detailsList.forEach(details => {
+    const children = Array.from(details.children);
+    for (let i = 0; i < children.length; i++) {
+      if (children[i].tagName === 'IMG') {
+        const blockElements = [children[i]];
+        let j = i + 1;
+        while (j < children.length && children[j].tagName !== 'IMG') {
+          blockElements.push(children[j]);
+          j++;
+        }
+        const wrapper = document.createElement('div');
+        wrapper.className = 'md-block';
+        blockElements.forEach(el => wrapper.appendChild(el));
+        details.insertBefore(wrapper, blockElements[0]);
+        blockElements.forEach(el => {
+          if (el !== wrapper) el.remove();
+        });
+        i = j - 1;
+      }
     }
+  });
 }
 
-// Previous Week button logic
-function previousWeek() {
-    const currentSlug = getCurrentSlug();
-    if (currentSlug) {
-        // numeric: subtract 1 from week part
-        let week = parseInt(currentSlug.slice(0,2),10);
-        let day = currentSlug.slice(2,4);
-        let year = currentSlug.slice(4,6);
-        if (week > 1) week--;
-        else week = 52; // wrap-around if needed
-        const prevSlug = `${String(week).padStart(2,'0')}${day}${year}`;
-        goToSlug(prevSlug);
-    } else {
-        // non-numeric: calculate previous week based on today
-        const today = new Date();
-        today.setDate(today.getDate() - 7); // subtract 7 days
-        const prevSlug = getCurrentWeekSlugForDate(today);
-        goToSlug(prevSlug);
-    }
+async function loadMarkdown(slug) {
+  if (!slug) {
+    content.innerHTML = `<p style="color:red;">No hash provided in URL</p>`;
+    return;
+  }
+
+  const file = slugToFile(slug);
+
+  try {
+    const res = await fetch(file);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const mdText = await res.text();
+    const html = marked.parse(mdText);
+
+    content.innerHTML = html;
+    wrapImageBlocks();
+  } catch (err) {
+    content.innerHTML = `<p style="color:red;">Failed to load ${file}: ${err.message}</p>`;
+    console.error(err);
+  }
 }
 
-// Current Week button logic
-function currentWeek() {
-    const slug = getCurrentWeekSlug();
-    goToSlug(slug);
+// --- Week navigation helper ---
+function updateWeekButtons(slug) {
+  const prevBtn = document.getElementById('prev-week');
+  const nextBtn = document.getElementById('next-week');
+  if (!slug) return;
+
+  const week = parseInt(slug.slice(0, 2), 10);
+  const day = parseInt(slug.slice(2, 4), 10);
+  const year = slug.slice(4); // YY stays as-is
+
+  if (prevBtn) {
+    prevBtn.onclick = () => {
+      const newWeek = String(week - 1).padStart(2, '0');
+      const newDay = String(day - 7).padStart(2, '0');
+      window.location.hash = `${newWeek}${newDay}${year}`;
+    };
+  }
+
+  if (nextBtn) {
+    nextBtn.onclick = () => {
+      const newWeek = String(week + 1).padStart(2, '0');
+      const newDay = String(day + 7).padStart(2, '0');
+      window.location.hash = `${newWeek}${newDay}${year}`;
+    };
+  }
 }
 
-// Generate week slug for arbitrary date
-function getCurrentWeekSlugForDate(date) {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = String(date.getFullYear()).slice(-2);
-    const weekNumber = getWeekNumber(date);
-    return `${weekNumber}${day}${year}`;
-}
+// --- Initial load and listener ---
+let slug = getSlugFromHash();
+loadMarkdown(slug);
+updateWeekButtons(slug);
 
-// Attach buttons (assuming buttons have IDs 'prevWeekBtn' and 'currWeekBtn')
-document.addEventListener('DOMContentLoaded', () => {
-    const prevBtn = document.getElementById('prevWeekBtn');
-    const currBtn = document.getElementById('currWeekBtn');
-
-    if (prevBtn) prevBtn.addEventListener('click', previousWeek);
-    if (currBtn) currBtn.addEventListener('click', currentWeek);
+window.addEventListener('hashchange', () => {
+  slug = getSlugFromHash();
+  loadMarkdown(slug);
+  updateWeekButtons(slug);
 });
