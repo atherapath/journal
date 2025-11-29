@@ -40,8 +40,6 @@ Which will serve as another slug to the corresponding weekly file.
 
 >Numbers speak the history.  Words speak the meaning.
 
----
-
 </details>
 
 ---
@@ -53,7 +51,7 @@ Which will serve as another slug to the corresponding weekly file.
 
 #captain</summary>
 
-This logic shows that the Captain’s Log stands on its own, an anchor translating number into meaning without relying on the word-system.
+This logic shows that the Captain’s Log stands on its own, an anchor translating number into meaning.
 
 >A link to a alternate parallel naming convention that uses no more than three words and spaces replaced with underscores. 
 
@@ -149,6 +147,9 @@ atherapath</summary>
 
 </details>
 
+
+</details>
+
 ---
 
 ![captain_flow](captain_flow.jpg)
@@ -156,9 +157,24 @@ atherapath</summary>
 ---
 
 
-</details>
 
 </details>
+
 
 ### Grounding with anchor...
->Grounding a chronological vessel of time is navigating a digital river flowing through the valley as a movement. Seeking solace and sovereignty against #micro_personal_attacks. Or #Infrastructure_as_Invasion.
+
+⚓🌕🌖🌗🌘🕕🌒🌓🌔🌕⚓
+
+>Grounding a chronological vessel of time is navigating a digital river flowing through the valley as a movement. Seeking solace and sovereignty against #micro_personal_attacks. Or #infrastructure_as_Invasion.
+
+---
+
+### Navigation 🚏
+ **Two Buttons**
+ - ***previous week***
+     - If the slug is not a number (eg #captain) then the previous week will be relevant to today's date. 
+     - if the slug is a number then the previous week corresponds to that number.
+ - ***current week***
+     - simply the current week of the year eg #481125 auto populated based on today's date with js logic.
+
+---
