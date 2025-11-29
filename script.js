@@ -1,138 +1,93 @@
-const content = document.getElementById('content');
+/**
+ * Captain's Weekly Navigation JS
+ * Handles Previous Week and Current Week buttons
+ * Works with numeric weekly slugs (wwddyy)
+ */
 
-function pad(n, width=2){ return String(n).padStart(width,'0'); }
-
-function getSlugFromHash() {
-  return window.location.hash ? window.location.hash.slice(1) : null;
+// Utility: get today's week number in wwddyy format
+function getCurrentWeekSlug() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = String(today.getFullYear()).slice(-2);
+    // wwddyy: week number + day + year
+    const weekNumber = getWeekNumber(today);
+    return `${weekNumber}${day}${year}`;
 }
 
-function slugToFile(slug) {
-  if (!slug) return 'captain.md';
-  // if slug looks like a numeric week code (e.g. 481125) we assume WWMMDD format
-  if (/^\d{6}$/.test(slug)) return `${slug}.md`;
-  return `${slug}.md`;
+// Calculate ISO week number
+function getWeekNumber(d) {
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    const weekNum = Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+    return String(weekNum).padStart(2, '0');
 }
 
-async function loadMarkdown(slug) {
-  const file = slugToFile(slug);
-  try {
-    const res = await fetch(file);
-    if (!res.ok) throw new Error('Not found');
-    const md = await res.text();
-    content.innerHTML = marked.parse(md);
-    // small DOM tweaks (optional): wrap images in figures if needed
-    wrapImageBlocks();
-  } catch (e) {
-    // fallback: show message and offer link to captain
-    content.innerHTML = `<h2>Not found</h2><p>Could not load <code>${file}</code>.</p><p><a href="#captain">Go to Captain</a></p>`;
-  }
+// Extract numeric slug from URL hash
+function getCurrentSlug() {
+    const hash = window.location.hash.substring(1); // remove #
+    if (/^\d+$/.test(hash)) return hash; // numeric slug
+    return null; // non-numeric
 }
 
-function wrapImageBlocks(){
-  // simple: find standalone images and wrap with figure for nicer layout
-  const imgs = content.querySelectorAll('p > img, img');
-  imgs.forEach(img => {
-    const p = img.closest('p');
-    if (p) {
-      const fig = document.createElement('figure');
-      fig.appendChild(img.cloneNode(true));
-      p.replaceWith(fig);
+// Navigate to a given numeric weekly slug
+function goToSlug(slug) {
+    if (!slug) return;
+    // Here you can implement logic to fetch/load the corresponding MD content
+    // For example, assuming sections are already on the page and using IDs
+    const target = document.querySelector(`#${slug}`);
+    if (target) {
+        target.scrollIntoView({behavior: 'smooth'});
+        // Optionally update URL hash
+        window.location.hash = slug;
+    } else {
+        console.warn(`Slug #${slug} not found on page.`);
     }
-  });
 }
 
-// --- Week / date helpers ---
-// Return Date for given year, month(1-12), day
-function makeDate(y,m,d){ return new Date(y,m-1,d); }
-
-// ISO week number and year
-function getISOWeek(d) {
-  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  // Thursday in current week decides the year.
-  date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay()||7));
-  const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
-  const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1)/7);
-  return { week: weekNo, year: date.getUTCFullYear() };
+// Previous Week button logic
+function previousWeek() {
+    const currentSlug = getCurrentSlug();
+    if (currentSlug) {
+        // numeric: subtract 1 from week part
+        let week = parseInt(currentSlug.slice(0,2),10);
+        let day = currentSlug.slice(2,4);
+        let year = currentSlug.slice(4,6);
+        if (week > 1) week--;
+        else week = 52; // wrap-around if needed
+        const prevSlug = `${String(week).padStart(2,'0')}${day}${year}`;
+        goToSlug(prevSlug);
+    } else {
+        // non-numeric: calculate previous week based on today
+        const today = new Date();
+        today.setDate(today.getDate() - 7); // subtract 7 days
+        const prevSlug = getCurrentWeekSlugForDate(today);
+        goToSlug(prevSlug);
+    }
 }
 
-// Format slug as WWMMDD where WW is ISO week (2 digits), MM month, DD day
-function formatSlugFromDate(d){
-  const { week } = getISOWeek(d);
-  const mm = d.getMonth()+1;
-  const dd = d.getDate();
-  return `${pad(week,2)}${pad(mm,2)}${pad(dd,2)}`;
+// Current Week button logic
+function currentWeek() {
+    const slug = getCurrentWeekSlug();
+    goToSlug(slug);
 }
 
-// Parse a slug of form WWMMDD into a Date (uses current year)
-function dateFromWeekSlug(slug){
-  if(!/^[0-9]{6}$/.test(slug)) return null;
-  const ww = parseInt(slug.slice(0,2),10);
-  const mm = parseInt(slug.slice(2,4),10);
-  const dd = parseInt(slug.slice(4,6),10);
-  const year = (new Date()).getFullYear();
-  // create date from mm/dd/year; fallback to today if invalid
-  const d = makeDate(year,mm,dd);
-  if (isNaN(d)) return null;
-  return d;
+// Generate week slug for arbitrary date
+function getCurrentWeekSlugForDate(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear()).slice(-2);
+    const weekNumber = getWeekNumber(date);
+    return `${weekNumber}${day}${year}`;
 }
 
-// Move date by days
-function shiftDays(d, days){
-  const copy = new Date(d.getTime());
-  copy.setDate(copy.getDate() + days);
-  return copy;
-}
+// Attach buttons (assuming buttons have IDs 'prevWeekBtn' and 'currWeekBtn')
+document.addEventListener('DOMContentLoaded', () => {
+    const prevBtn = document.getElementById('prevWeekBtn');
+    const currBtn = document.getElementById('currWeekBtn');
 
-// Compute "previous week" target slug
-function previousWeekSlug(currentSlug){
-  let baseDate;
-  if (currentSlug && /^[0-9]{6}$/.test(currentSlug)) {
-    baseDate = dateFromWeekSlug(currentSlug) || new Date();
-  } else {
-    baseDate = new Date();
-  }
-  const prev = shiftDays(baseDate, -7);
-  return formatSlugFromDate(prev);
-}
-
-// Compute "current week" slug (based on today's date)
-function currentWeekSlug(){
-  return formatSlugFromDate(new Date());
-}
-
-// --- Week button behavior ---
-const prevBtn = document.getElementById('prev-week');
-const nextBtn = document.getElementById('next-week');
-
-function updateWeekButtons(slug){
-  // Show both buttons; could hide next if already on current week
-  if (!prevBtn || !nextBtn) return;
-  prevBtn.disabled = false;
-  nextBtn.disabled = false;
-  // If on current week, disable Next (which acts as "Go to current")
-  const curSlug = currentWeekSlug();
-  if (slug === curSlug) nextBtn.disabled = true;
-  else nextBtn.disabled = false;
-}
-
-if (prevBtn) prevBtn.addEventListener('click', ()=>{
-  const slug = getSlugFromHash();
-  const target = previousWeekSlug(slug);
-  window.location.hash = `#${target}`;
-});
-
-if (nextBtn) nextBtn.addEventListener('click', ()=>{
-  const target = currentWeekSlug();
-  window.location.hash = `#${target}`;
-});
-
-// --- Initial load and listener ---
-let slug = getSlugFromHash();
-loadMarkdown(slug);
-updateWeekButtons(slug);
-
-window.addEventListener('hashchange', () => {
-  slug = getSlugFromHash();
-  loadMarkdown(slug);
-  updateWeekButtons(slug);
+    if (prevBtn) prevBtn.addEventListener('click', previousWeek);
+    if (currBtn) currBtn.addEventListener('click', currentWeek);
 });
