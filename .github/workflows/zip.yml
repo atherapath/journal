@@ -5,10 +5,11 @@ on:
     branches:
       - main
     paths:
-      - script.js
-      - style.css
-      - index.html
-      - captain.md
+      - "script.js"
+      - "style.css"
+      - "index.html"
+      - "captain.md"
+      workflow_dispatch:
 
 permissions:
   contents: write
