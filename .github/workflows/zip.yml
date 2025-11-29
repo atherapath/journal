@@ -5,11 +5,10 @@ on:
     branches:
       - main
     paths:
-      - "script.js"
-      - "style.css"
-      - "index.html"
-      - "captain.md"
-      workflow_dispatch:
+      - script.js
+      - style.css
+      - index.html
+      - captain.md
 
 permissions:
   contents: write
@@ -54,7 +53,7 @@ jobs:
           prerelease: false
           overwrite: true
           files: |
-            out/captain_bundle.zip
+            out/atherapath_bundle.zip
             out/main_mds.zip
             out/jpg.zip
             out/mp4.zip
