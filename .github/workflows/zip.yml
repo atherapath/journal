@@ -1,0 +1,61 @@
+name: Create ZIP bundle
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - script.js
+      - style.css
+      - index.html
+      - captain.md
+
+permissions:
+  contents: write
+
+jobs:
+  make-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create output folder
+        run: mkdir -p out
+
+      - name: Create ZIP from selected files
+        run: |
+          zip -r out/atherapath_bundle.zip \
+            script.js \
+            style.css \
+            index.html \
+            captain.md \
+
+      - name: Create ZIP of all Markdown files
+        run: |
+          find . -name "*.md" -print | zip -@ out/main_mds.zip
+
+      - name: Create ZIP of all JPEG files
+        run: |
+          find . -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) -print | zip -@ out/jpg.zip
+
+      - name: Create ZIP of all MP4 files
+        run: |
+          find . -type f -iname "*.mp4" -print | zip -@ out/mp4.zip
+
+      - name: Create or Update Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: latest-bundle
+          name: "Latest Atherapath Bundle"
+          draft: false
+          prerelease: false
+          overwrite: true
+          files: |
+            out/captain_bundle.zip
+            out/main_mds.zip
+            out/jpg.zip
+            out/mp4.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
