@@ -1,43 +1,68 @@
-name: Create ZIP bundle
+name: Build bundle, create release, upload assets
 
 on:
+  workflow_dispatch:    # manual Run workflow button in Actions UI
   push:
     branches:
       - main
-  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  make-zip:
+  build-and-release:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create output folder
+      - name: Prepare output folder
         run: mkdir -p out
 
-      - name: Create ZIP from selected files
+      - name: Create ZIP bundle (selected files)
         run: |
-          zip -r out/atherapath_bundle.zip script.js style.css index.html captain.md
+          zip -r out/atherapath_bundle.zip script.js style.css index.html captain.md || true
 
       - name: Create ZIP of all Markdown files
         run: |
-          find . -name "*.md" -print | zip -@ out/main_mds.zip
+          find . -name "*.md" -print | zip -@ out/main_mds.zip || true
 
       - name: Create ZIP of all JPEG files
         run: |
-          find . -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) -print | zip -@ out/jpg.zip
+          find . -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) -print | zip -@ out/jpg.zip || true
 
       - name: Create ZIP of all MP4 files
         run: |
-          find . -type f -iname "*.mp4" -print | zip -@ out/mp4.zip
+          find . -type f -iname "*.mp4" -print | zip -@ out/mp4.zip || true
 
-      - name: Upload artifacts (download from Actions UI)
-        uses: actions/upload-artifact@v4
+      - name: Ensure release exists (create or update)
+        id: create_release
+        uses: actions/create-release@v1
         with:
-          name: atherapath-bundles
-          path: out/*.zip
+          tag_name: latest-bundle
+          release_name: Latest Atherapath Bundle
+          body: Auto-generated release by workflow
+          draft: false
+          prerelease: false
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload release assets
+        id: upload_assets
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: latest-bundle
+          files: out/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish direct download links to run summary
+        run: |
+          REPO="${{ github.repository }}"
+          echo "## Stable download links (click to download)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          test -f out/atherapath_bundle.zip && echo "- [atherapath_bundle.zip](https://github.com/$REPO/releases/download/latest-bundle/atherapath_bundle.zip)" >> $GITHUB_STEP_SUMMARY || true
+          test -f out/main_mds.zip && echo "- [main_mds.zip](https://github.com/$REPO/releases/download/latest-bundle/main_mds.zip)" >> $GITHUB_STEP_SUMMARY || true
+          test -f out/jpg.zip && echo "- [jpg.zip](https://github.com/$REPO/releases/download/latest-bundle/jpg.zip)" >> $GITHUB_STEP_SUMMARY || true
+          test -f out/mp4.zip && echo "- [mp4.zip](https://github.com/$REPO/releases/download/latest-bundle/mp4.zip)" >> $GITHUB_STEP_SUMMARY || true
