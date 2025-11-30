@@ -1,5 +1,11 @@
 ![captain](captain.jpg)
 
+---
+
+### ▂▃▄▅▆▇█▓▒░ ꄲꀘ ░▒▓█▇▆▅▄▃▂ 
+
+---
+
 ### Archive bug 🐛 Anchor slug 🐌
 Welcome aboard the **Athera Path Vessel**, where creation, validation, and delivery sail as one continuous route.
   
@@ -16,11 +22,8 @@ This is the **Captain’s Workflow**.
 ---
 
 <details markdown='1'>
-<summary>The Vessel...
 
----
-
-Waddy</summary>
+<summary> ▂▃▄▅▆▇█▓▒░ ꒦ꏂꇙꇙꏂ꒒ ░▒▓█▇▆▅▄▃▂</summary>
 
 ---
 
@@ -45,11 +48,9 @@ Which will serve as another slug to the corresponding weekly file.
 ---
 
 <details markdown='1'>
-<summary>Sovereign Voice
+<summary>***•♫•♬• 𝑆𝑜𝑣𝑒𝑟𝑒𝑖𝑔𝑛 𝑉𝑜𝑖𝑐𝑒 •♬•♫•***</summary>
 
----
-
-#captain</summary>
+[#captain](#captain)
 
 This logic shows that the Captain’s Log stands on its own, an anchor translating number into meaning.
 
@@ -70,13 +71,8 @@ Slug = #micro_personal_attack
 ---
 
 <details markdown='1'>
-<summary>Recursive Authorship
+<summary>‧͙⁺˚*･༓☾ 𝗥𝗲𝗰𝘂𝗿𝘀𝗶𝘃𝗲 𝗔𝘂𝘁𝗵𝗼𝗿𝘀𝗵𝗶𝗽 ☽༓･*˚⁺‧</summary>
 
----
-
-27 09:54:03</summary>
-
----
 
 A ***details*** database of recursive sovereign flow
 
@@ -160,7 +156,7 @@ atherapath</summary>
 
 </details>
 
-[#captain walks atherapath](captain1.jpg)
+[ ▀▄▀▄ 𝑊ℎ𝑎𝑡'𝑠 𝑎 𝑠𝑙𝑢𝑔 ▄▀▄▀ ](3011257.jpg)
 
 
 ### Grounding with anchor...
@@ -168,6 +164,10 @@ atherapath</summary>
 ⚓🌕🌖🌗🌘🕕🌒🌓🌔🌕⚓
 
 >Grounding a chronological vessel of time is navigating a digital river flowing through the valley as a movement. Seeking solace and sovereignty against #micro_personal_attacks. Or #infrastructure_as_Invasion.
+
+![captain1](captain1.jpg)
+
+[#captain walks atherapath](captain1.jpg)
 
 ---
 
