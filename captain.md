@@ -71,23 +71,26 @@ Slug = #micro_personal_attack
 ---
 
 <details markdown='1'>
-<summary> ༺ღ༒ яє¢υяѕινє αυтнσяѕнιρ ༒ღ༻ </summary>
-
+<summary>༒яє¢υяѕινє αυтнσяѕнιρ༒</summary>
 
 A ***details*** database of recursive sovereign flow
+
+---
 
 <details markdown='1'><summary>
 atherapath</summary>
 
-***Re defining the role between...***
-
 ---
+
+***Re defining the role between...***
 
 *source creator* on **atherapath**
  
  - creating 
  - acting 
  - walking 
+ 
+---
  
 <details markdown='1'>
 <summary>Sovereign Voice</summary>
@@ -103,6 +106,8 @@ atherapath</summary>
     - Energetic 
 
 `The divination of perception with sound...`
+
+---
 
 </details>
 
@@ -134,8 +139,11 @@ atherapath</summary>
 
 >The receiver of a lecture will only share 20 percent of another's concept - just enough to aid survival.
 
+---
 
 </details>
+
+---
 
 >Words are evolving numbers are numbers
 
@@ -143,21 +151,18 @@ atherapath</summary>
 
 </details>
 
-
-</details>
-
 ---
 
 ![captain_flow](captain_flow.jpg)
 
+</details>
+
 ---
-
-
+[ ▀▄▀▄ 𝑊ℎ𝑎𝑡'𝑠 𝑎 𝑠𝑙𝑢𝑔 ▄▀▄▀ ](3011257.jpg)
 
 </details>
 
-[ ▀▄▀▄ 𝑊ℎ𝑎𝑡'𝑠 𝑎 𝑠𝑙𝑢𝑔 ▄▀▄▀ ](3011257.jpg)
-
+---
 
 ### Grounding with anchor...
 
