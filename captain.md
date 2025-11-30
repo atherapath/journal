@@ -160,6 +160,8 @@ atherapath</summary>
 
 </details>
 
+[#captain walks atherapath](captain1.jpg)
+
 
 ### Grounding with anchor...
 
