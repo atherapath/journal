@@ -71,7 +71,7 @@ Slug = #micro_personal_attack
 ---
 
 <details markdown='1'>
-<summary>‧͙⁺˚*･༓☾ 𝗥𝗲𝗰𝘂𝗿𝘀𝗶𝘃𝗲 𝗔𝘂𝘁𝗵𝗼𝗿𝘀𝗵𝗶𝗽 ☽༓･*˚⁺‧</summary>
+<summary> ༺ღ༒ яє¢υяѕινє αυтнσяѕнιρ ༒ღ༻ </summary>
 
 
 A ***details*** database of recursive sovereign flow
