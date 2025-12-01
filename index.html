@@ -1,24 +1,52 @@
-<!DOCTYPE html>
+<!-- index.html -->
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atherapath Weekly Journal</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atherapath Weekly Journal — Updated</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
   <header>
+    <h1>Atherapath Weekly Journal</h1>
   </header>
 
   <main id="content">
-    <p>Loading content...</p>
+    <div id="week-container">
+      <!-- Example week blocks. In your real project these will be generated from your markdown/MD fragments. -->
+      <div class="week" data-week="1" id="week-1">
+        <h2>Week 1</h2>
+        <p>Example content for week 1.</p>
+      </div>
+      <div class="week" data-week="2" id="week-2">
+        <h2>Week 2</h2>
+        <p>Example content for week 2.</p>
+      </div>
+      <!-- Add as many weeks as you actually have -->
+    </div>
   </main>
 
-  <!-- Week navigation buttons live OUTSIDE main -->
-  <div class="week-nav">
-    <button id="prev-week">⬅️ Previous Week</button>
-    <button id="next-week">➡️ Next Week</button>
+  <nav class="week-nav">
+    <button id="prevBtn" aria-label="Previous week">◀</button>
+
+    <!-- Present moment button (smaller, uses an icon instead of the word) -->
+    <button id="presentBtn" class="present-btn" aria-label="Present moment" title="Present Moment">🎁</button>
+
+    <button id="nextBtn" aria-label="Next week">▶</button>
+  </nav>
+
+  <!-- Error modal shown when requested week doesn't exist -->
+  <div id="errorModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="errorTitle">
+    <div class="modal-inner">
+      <h3 id="errorTitle">Week not found</h3>
+      <p id="errorMessage">The week you tried to open doesn't exist.</p>
+      <div class="modal-actions">
+        <button id="goCaptain">Go to Captain</button>
+        <button id="goPresent">Go to Present Week</button>
+        <button id="dismiss">Cancel</button>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>

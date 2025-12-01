@@ -1,82 +1,28 @@
-html, body {
-  background-color: #000;
-  color: #FFFFFF;
-  font-family: monospace;
-  margin: 0;
-  padding: 1rem;
+/* style.css */
+/* Neon-green baseline, dark background */
+:root{
+  --neon:#0ffb3c; /* neon green */
+  --bg:#000;
+  --panel:#111;
 }
 
-hr {
-  border: none;
-  border-top: 1px solid #0f0;
-  box-shadow: 0 0 5px 1px #0f0;
-  margin: 1rem 0;
-}
+html,body{height:100%;margin:0;background:var(--bg);color:#fff;font-family:system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+header{padding:18px;text-align:center}
+main#content{max-width:900px;margin:18px auto;padding:18px;background:linear-gradient(180deg,#071,#000);border-radius:12px;min-height:320px}
+.week{padding:12px;background:rgba(255,255,255,0.02);margin-bottom:8px;border-radius:8px}
+.hidden{display:none}
 
-h1, h2, h3, h4, h5, h6, code, pre {
-  color: #FFFFFF;
-}
+.week-nav{position:fixed;left:0;right:0;bottom:18px;display:flex;gap:12px;justify-content:center;align-items:center}
+.week-nav button{min-width:56px;height:56px;border-radius:12px;border:0;background:var(--panel);color:var(--neon);font-size:20px;box-shadow:0 6px 18px rgba(0,0,0,0.6);cursor:pointer}
+.week-nav .present-btn{width:44px;height:44px;min-width:44px;border-radius:8px;font-size:18px}
+.week-nav button:hover{transform:translateY(-3px)}
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0.5rem 0;
-}
+/* Modal */
+.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6)}
+.modal.hidden{display:none}
+.modal-inner{background:#070707;padding:18px;border-radius:10px;border:2px solid rgba(0,255,120,0.12);max-width:420px;width:calc(100% - 40px)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.modal-actions button{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:6px;color:var(--neon);cursor:pointer}
 
-a {
-  color: #0f0;
-  text-decoration: underline;
-}
-
-details {
-  background-color: #004F1F;
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-details summary {
-  color: #FFFFFF;
-  font-weight: bold;
-}
-
-blockquote {
-  border-left: 2px solid #0f0;
-  padding-left: 1rem;
-}
-
-code, pre {
-  color: #0f0;
-  background-color: #001;
-}
-
-#content {
-  position: relative;
-  padding: 1rem;
-  background-color: #111;
-  border-radius: 10px;
-  box-shadow: 0 0 20px 5px #0f0;
-}
-
-/* Week navigation styling */
-.week-nav {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.week-nav button {
-  flex: 1;
-  padding: 1rem;
-  font-size: 1rem;
-  background-color: #0f0;
-  color: #000;
-  border: 2px solid #222;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.week-nav button:hover {
-  background-color: #1f1;
-}
+/* responsive tweaks */
+@media(min-width:800px){.week-nav button{min-width:64px;height:64px;border-radius:14px}}
