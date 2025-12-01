@@ -59,53 +59,26 @@ async function loadMarkdown(slug) {
 // --- Week navigation helper ---
 function updateWeekButtons(slug) {
   const prevBtn = document.getElementById('prev-week');
-  const currentBtn = document.getElementById('current-week');
+  const nextBtn = document.getElementById('next-week');
+  if (!slug) return;
 
-  // Helper: get numeric slug or today's date as slug
-  function getTodaySlug() {
-    const now = new Date();
-    const yy = String(now.getFullYear()).slice(2);
-    const mm = String(now.getMonth() + 1).padStart(2, '0'); // month
-    const dd = String(now.getDate()).padStart(2, '0');      // day
-    return `${mm}${dd}${yy}`;
-  }
+  const week = parseInt(slug.slice(0, 2), 10);
+  const day = parseInt(slug.slice(2, 4), 10);
+  const year = slug.slice(4); // YY stays as-is
 
   if (prevBtn) {
     prevBtn.onclick = () => {
-      let newSlug;
-      if (slug && /^\d+$/.test(slug)) {
-        // Numeric slug: subtract 7 days
-        const week = parseInt(slug.slice(0, 2), 10);
-        const day = parseInt(slug.slice(2, 4), 10);
-        const year = slug.slice(4);
-
-        const prevDate = new Date(`20${year}`, week - 1, day);
-        prevDate.setDate(prevDate.getDate() - 7);
-
-        const newWeek = String(prevDate.getMonth() + 1).padStart(2, '0');
-        const newDay = String(prevDate.getDate()).padStart(2, '0');
-        const newYear = String(prevDate.getFullYear()).slice(2);
-
-        newSlug = `${newWeek}${newDay}${newYear}`;
-      } else {
-        // Non-numeric slug: just 7 days back from today
-        const prevDate = new Date();
-        prevDate.setDate(prevDate.getDate() - 7);
-
-        const newWeek = String(prevDate.getMonth() + 1).padStart(2, '0');
-        const newDay = String(prevDate.getDate()).padStart(2, '0');
-        const newYear = String(prevDate.getFullYear()).slice(2);
-
-        newSlug = `${newWeek}${newDay}${newYear}`;
-      }
-
-      window.location.hash = `#${newSlug}`;
+      const newWeek = String(week - 1).padStart(2, '0');
+      const newDay = String(day - 7).padStart(2, '0');
+      window.location.hash = `${newWeek}${newDay}${year}`;
     };
   }
 
-  if (currentBtn) {
-    currentBtn.onclick = () => {
-      window.location.hash = `#${getTodaySlug()}`;
+  if (nextBtn) {
+    nextBtn.onclick = () => {
+      const newWeek = String(week + 1).padStart(2, '0');
+      const newDay = String(day + 7).padStart(2, '0');
+      window.location.hash = `${newWeek}${newDay}${year}`;
     };
   }
 }
