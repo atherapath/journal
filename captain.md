@@ -174,14 +174,10 @@ atherapath</summary>
 
 [#captain walks atherapath](captain1.jpg)
 
----
+## navigation table
 
-### Navigation 🚏
- **Two Buttons**
- - ***previous week***
-     - If the slug is not a number (eg #captain) then the previous week will be relevant to today's date. 
-     - if the slug is a number then the previous week corresponds to that number.
- - ***current week***
-     - simply the current week of the year eg #481125 auto populated based on today's date with js logic.
-
----
+Week | Month | Year | Slug
+---|-------|---|
+47|Nov|2025|[#471725](#471725)
+48|Nov|2025|[#482425](#482425)
+49|Nov/Dec|2025|[#493125](#493125)
