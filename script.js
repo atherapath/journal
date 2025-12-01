@@ -56,40 +56,11 @@ async function loadMarkdown(slug) {
   }
 }
 
-// --- Week navigation helper ---
-function updateWeekButtons(slug) {
-  const prevBtn = document.getElementById('prev-week');
-  const nextBtn = document.getElementById('next-week');
-  if (!slug) return;
-
-  const week = parseInt(slug.slice(0, 2), 10);
-  const day = parseInt(slug.slice(2, 4), 10);
-  const year = slug.slice(4); // YY stays as-is
-
-  if (prevBtn) {
-    prevBtn.onclick = () => {
-      const newWeek = String(week - 1).padStart(2, '0');
-      const newDay = String(day - 7).padStart(2, '0');
-      window.location.hash = `${newWeek}${newDay}${year}`;
-    };
-  }
-
-  if (nextBtn) {
-    nextBtn.onclick = () => {
-      const newWeek = String(week + 1).padStart(2, '0');
-      const newDay = String(day + 7).padStart(2, '0');
-      window.location.hash = `${newWeek}${newDay}${year}`;
-    };
-  }
-}
-
 // --- Initial load and listener ---
 let slug = getSlugFromHash();
 loadMarkdown(slug);
-updateWeekButtons(slug);
 
 window.addEventListener('hashchange', () => {
   slug = getSlugFromHash();
   loadMarkdown(slug);
-  updateWeekButtons(slug);
 });

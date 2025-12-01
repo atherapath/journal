@@ -57,26 +57,3 @@ code, pre {
   border-radius: 10px;
   box-shadow: 0 0 20px 5px #0f0;
 }
-
-/* Week navigation styling */
-.week-nav {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.week-nav button {
-  flex: 1;
-  padding: 1rem;
-  font-size: 1rem;
-  background-color: #0f0;
-  color: #000;
-  border: 2px solid #222;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.week-nav button:hover {
-  background-color: #1f1;
-}
