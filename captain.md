@@ -176,13 +176,8 @@ atherapath</summary>
 
 ## navigation table
 
-Week | Month | Year | Slug
----|-------|---|
-47|Nov|2025|[#471725](#471725)
-48|Nov|2025|[#482425](#482425)
-49|Nov/Dec|2025|[#493125](#493125)
-
-| Left aligned | Middle aligned | Right aligned |
-| :--------------- | :------------------: | -----------------: |
-| Test                 | Test                      | Test                    |
-| Test                 | Test                      | Test                    |
+| Week |  Slug
+| :---------------
+47|[#471725](#471725)
+48|[#482425](#482425)
+49|[#493125](#493125)
