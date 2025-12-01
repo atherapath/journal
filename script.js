@@ -1,35 +1,95 @@
 const content = document.getElementById('content');
 
-function pad(n, width=2){ return String(n).padStart(width,'0'); }
-
 function getSlugFromHash() {
   return window.location.hash ? window.location.hash.slice(1) : null;
 }
 
-async function loadMarkdown(slug) {
-  const file = slugToFile(slug);
-  try {
-    const res = await fetch(file);
-    if (!res.ok) throw new Error('Not found');
-    const md = await res.text();
-    content.innerHTML = marked.parse(md);
-    // small DOM tweaks (optional): wrap images in figures if needed
-    wrapImageBlocks();
-  } catch (e) {
-    // fallback: show message and offer link to captain
-    content.innerHTML = `<h2>Not found</h2><p>Could not load <code>${file}</code>.</p><p><a href="#captain">Go to Captain</a></p>`;
-  }
+function slugToFile(slug) {
+  if (!slug) return null;
+  return `${slug}.md`;
 }
 
-function wrapImageBlocks(){
-  // simple: find standalone images and wrap with figure for nicer layout
-  const imgs = content.querySelectorAll('p > img, img');
-  imgs.forEach(img => {
-    const p = img.closest('p');
-    if (p) {
-      const fig = document.createElement('figure');
-      fig.appendChild(img.cloneNode(true));
-      p.replaceWith(fig);
+function wrapImageBlocks() {
+  const detailsList = document.querySelectorAll('details');
+  detailsList.forEach(details => {
+    const children = Array.from(details.children);
+    for (let i = 0; i < children.length; i++) {
+      if (children[i].tagName === 'IMG') {
+        const blockElements = [children[i]];
+        let j = i + 1;
+        while (j < children.length && children[j].tagName !== 'IMG') {
+          blockElements.push(children[j]);
+          j++;
+        }
+        const wrapper = document.createElement('div');
+        wrapper.className = 'md-block';
+        blockElements.forEach(el => wrapper.appendChild(el));
+        details.insertBefore(wrapper, blockElements[0]);
+        blockElements.forEach(el => {
+          if (el !== wrapper) el.remove();
+        });
+        i = j - 1;
+      }
     }
   });
 }
+
+async function loadMarkdown(slug) {
+  if (!slug) {
+    content.innerHTML = `<p style="color:red;">No hash provided in URL</p>`;
+    return;
+  }
+
+  const file = slugToFile(slug);
+
+  try {
+    const res = await fetch(file);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const mdText = await res.text();
+    const html = marked.parse(mdText);
+
+    content.innerHTML = html;
+    wrapImageBlocks();
+  } catch (err) {
+    content.innerHTML = `<p style="color:red;">Failed to load ${file}: ${err.message}</p>`;
+    console.error(err);
+  }
+}
+
+// --- Week navigation helper ---
+function updateWeekButtons(slug) {
+  const prevBtn = document.getElementById('prev-week');
+  const nextBtn = document.getElementById('next-week');
+  if (!slug) return;
+
+  const week = parseInt(slug.slice(0, 2), 10);
+  const day = parseInt(slug.slice(2, 4), 10);
+  const year = slug.slice(4); // YY stays as-is
+
+  if (prevBtn) {
+    prevBtn.onclick = () => {
+      const newWeek = String(week - 1).padStart(2, '0');
+      const newDay = String(day - 7).padStart(2, '0');
+      window.location.hash = `${newWeek}${newDay}${year}`;
+    };
+  }
+
+  if (nextBtn) {
+    nextBtn.onclick = () => {
+      const newWeek = String(week + 1).padStart(2, '0');
+      const newDay = String(day + 7).padStart(2, '0');
+      window.location.hash = `${newWeek}${newDay}${year}`;
+    };
+  }
+}
+
+// --- Initial load and listener ---
+let slug = getSlugFromHash();
+loadMarkdown(slug);
+updateWeekButtons(slug);
+
+window.addEventListener('hashchange', () => {
+  slug = getSlugFromHash();
+  loadMarkdown(slug);
+  updateWeekButtons(slug);
+});
