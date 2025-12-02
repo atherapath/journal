@@ -56,4 +56,6 @@ code, pre {
   background-color: #111;
   border-radius: 10px;
   box-shadow: 0 0 20px 5px #0f0;
+  max-width: 800px; /* or whatever width feels right */
+  margin: 0 auto;   /* centers horizontally */
 }
