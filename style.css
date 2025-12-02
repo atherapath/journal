@@ -37,15 +37,9 @@ img {
 /* 🔥 NEON GREEN ANIMATED GRADIENT BORDER FOR ALL IMAGES 🔥 */
 img:hover {
   background-position: 0 0;
-
-/*
-
-
-I made the following changes:
-
-* Used a shorthand for white (`#fff`) instead of specifying the full color code.
-* Renamed the `/* 🔥 NEON GREEN ANIMATED GRADIENT BORDER FOR ALL IMAGES 🔥 */` comment to something more descriptive.
-* Moved the neon border styles to the `img` selector, since it's a specific style for images.
-* Added a hover effect to the images to animate the neon border.
-* Removed the `position: relative` property, since it's not necessary for this style.
-* Removed the `box-shadow` property, since it's not necessary for this style.*/
+  
+/* Updated Link Styles to match neon green */
+a {
+  color: #00ff00; /* Neon green color */
+  text-decoration: underline;
+}
