@@ -29,9 +29,9 @@ img {
   padding: 6px;
   border-radius: 12px;
   background-image: linear-gradient(to bottom, #0f0, #0ff);
-  background-size: 100% 1px;
+  background-size: 100% 5px;
   background-position: 0 100%;
-  transition: background-position 0.5s;
+  transition: background-position 1s;
 }
 
 /* 🔥 NEON GREEN ANIMATED GRADIENT BORDER FOR ALL IMAGES 🔥 */
@@ -40,14 +40,14 @@ img:hover {
   
 /* Updated Link Styles to match neon green */
 a {
-  color: #00ff00; /* Neon green color */
+  color: #0f0; /* Neon green color */
   text-decoration: underline;
 }
 
 a:visited {
-  color: #00ff00; /* Neon green color for visited links */
+  color: #0f0; /* Neon green color for visited links */
 }
 
 a:hover {
-  color: #00ff00; /* Neon green color for hover */
+  color: #0f0; /* Neon green color for hover */
 }
