@@ -43,3 +43,11 @@ a {
   color: #00ff00; /* Neon green color */
   text-decoration: underline;
 }
+
+a:visited {
+  color: #00ff00; /* Neon green color for visited links */
+}
+
+a:hover {
+  color: #00ff00; /* Neon green color for hover */
+}
