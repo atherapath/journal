@@ -65,7 +65,7 @@ document.querySelectorAll("details").forEach(detail => {
     }
   });
 });
-
+- [ ] 
   } catch (err) {
     content.innerHTML = `<p style="color:red;">Failed to load ${file}: ${err.message}</p>`;
     console.error(err);
@@ -79,4 +79,35 @@ loadMarkdown(slug);
 window.addEventListener('hashchange', () => {
   slug = getSlugFromHash();
   loadMarkdown(slug);
+});
+
+document.getElementById("current-week-btn").addEventListener("click", () => {
+  const today = new Date();
+
+  // Get ISO week Monday (start of week)
+  const getIsoWeekMonday = (date) => {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const day = d.getUTCDay() || 7; // Sunday -> 7
+    d.setUTCDate(d.getUTCDate() + (1 - day)); // back to Monday
+    return d;
+  };
+
+  const monday = getIsoWeekMonday(today);
+
+  // Compute ISO week number
+  const getIsoWeekNumber = (date) => {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const day = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - day);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  };
+
+  const week = getIsoWeekNumber(today);                         // WW
+  const dd = String(monday.getUTCDate()).padStart(2, "0");      // DD (Monday date)
+  const yy = String(monday.getUTCFullYear()).slice(-2);         // YY
+
+  const slug = `${week}${dd}${yy}`; // e.g., "493125"
+
+  window.location.hash = `#${slug}`;
 });
