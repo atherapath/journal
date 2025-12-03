@@ -65,6 +65,14 @@ document.querySelectorAll("details").forEach(detail => {
     }
   });
 });
+
+// Scroll to top and close all <details>
+  document.getElementById("back-to-top").addEventListener("click", function (e) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.querySelectorAll("details").forEach(d => d.removeAttribute("open"));
+  });
+
 - [ ] 
   } catch (err) {
     content.innerHTML = `<p style="color:red;">Failed to load ${file}: ${err.message}</p>`;
@@ -79,34 +87,4 @@ loadMarkdown(slug);
 window.addEventListener('hashchange', () => {
   slug = getSlugFromHash();
   loadMarkdown(slug);
-});
-
-document.getElementById("current-week-btn").addEventListener("click", () => {
-  const today = new Date();
-
-  // Get ISO week number
-  const getIsoWeekNumber = (date) => {
-    const temp = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    const day = temp.getUTCDay() || 7;
-    temp.setUTCDate(temp.getUTCDate() + 4 - day);
-    const yearStart = new Date(Date.UTC(temp.getUTCFullYear(), 0, 1));
-    return Math.ceil((((temp - yearStart) / 86400000) + 1) / 7);
-  };
-
-  // Get Monday of ISO week
-  const getIsoWeekMonday = (date) => {
-    const temp = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    const day = temp.getUTCDay() || 7;
-    temp.setUTCDate(temp.getUTCDate() - day + 1); // shift to Monday
-    return temp;
-  };
-
-  const week = getIsoWeekNumber(today);               // WW
-  const monday = getIsoWeekMonday(today);             // DDYY anchor
-  const dd = String(monday.getUTCDate()).padStart(2, "0");
-  const yy = String(monday.getUTCFullYear()).slice(-2);
-
-  const slug = `${week}${dd}${yy}`; // e.g., "493125"
-
-  window.location.hash = `#${slug}`;
 });

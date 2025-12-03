@@ -32,6 +32,15 @@ img {
               0 0 5px #ccff66;
 }
 
+#back-to-top {
+    position: fixed;
+    right: 0.5em;   /* final three right columns */
+    bottom: 1em;
+    font-size: 2em; /* about three emoji size */
+    text-decoration: none;
+    z-index: 999;
+  }
+
 a {
   color: #0f0;
   text-decoration: underline;
