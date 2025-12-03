@@ -50,6 +50,19 @@ async function loadMarkdown(slug) {
 
     content.innerHTML = html;
     wrapImageBlocks();
+    
+document.querySelectorAll("details").forEach(detail => {
+  detail.addEventListener("toggle", function () {
+    if (this.open) {
+      document.querySelectorAll("details").forEach(other => {
+        if (other !== this) {
+          other.removeAttribute("open");
+        }
+      });
+    }
+  });
+});
+
   } catch (err) {
     content.innerHTML = `<p style="color:red;">Failed to load ${file}: ${err.message}</p>`;
     console.error(err);
