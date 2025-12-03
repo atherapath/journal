@@ -54,4 +54,6 @@ code, pre {
 #content {
   position: relative;
   background-color: #111;
+  padding: 12px;       /* gives breathing room for glow */
+  overflow: visible;   /* ensures shadows aren’t cut off */
 }
