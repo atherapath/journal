@@ -84,28 +84,27 @@ window.addEventListener('hashchange', () => {
 document.getElementById("current-week-btn").addEventListener("click", () => {
   const today = new Date();
 
-  // Get ISO week Monday (start of week)
-  const getIsoWeekMonday = (date) => {
-    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    const day = d.getUTCDay() || 7; // Sunday -> 7
-    d.setUTCDate(d.getUTCDate() + (1 - day)); // back to Monday
-    return d;
-  };
-
-  const monday = getIsoWeekMonday(today);
-
-  // Compute ISO week number
+  // Get ISO week number
   const getIsoWeekNumber = (date) => {
-    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    const day = d.getUTCDay() || 7;
-    d.setUTCDate(d.getUTCDate() + 4 - day);
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    const temp = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const day = temp.getUTCDay() || 7;
+    temp.setUTCDate(temp.getUTCDate() + 4 - day);
+    const yearStart = new Date(Date.UTC(temp.getUTCFullYear(), 0, 1));
+    return Math.ceil((((temp - yearStart) / 86400000) + 1) / 7);
   };
 
-  const week = getIsoWeekNumber(today);                         // WW
-  const dd = String(monday.getUTCDate()).padStart(2, "0");      // DD (Monday date)
-  const yy = String(monday.getUTCFullYear()).slice(-2);         // YY
+  // Get Monday of ISO week
+  const getIsoWeekMonday = (date) => {
+    const temp = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const day = temp.getUTCDay() || 7;
+    temp.setUTCDate(temp.getUTCDate() - day + 1); // shift to Monday
+    return temp;
+  };
+
+  const week = getIsoWeekNumber(today);               // WW
+  const monday = getIsoWeekMonday(today);             // DDYY anchor
+  const dd = String(monday.getUTCDate()).padStart(2, "0");
+  const yy = String(monday.getUTCFullYear()).slice(-2);
 
   const slug = `${week}${dd}${yy}`; // e.g., "493125"
 
