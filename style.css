@@ -33,10 +33,6 @@ a {
   text-decoration: underline;
 }
 
-details {
-  padding: 0px;
-}
-
 details summary {
   color: #FFFFFF;
   font-weight: bold;
