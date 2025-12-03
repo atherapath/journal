@@ -24,14 +24,12 @@ h1, h2, h3, h4, h5, h6, code, pre {
 }
 
 img {
-  min-width: 800px;
+  box-shadow: 0 0 5px #33ccff, 0 0 5px #66ffff, 0 0 5px #ccff66;
   width: 100%; /* will scale down on smaller screens */
   height: auto;
   display: block;
   margin: 1.5rem 0;
   padding: 6px;
-  border-radius: 12px;
-  /* Neon border styles as before, if needed */
 }
 
 a {
