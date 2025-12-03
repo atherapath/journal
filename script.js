@@ -54,11 +54,14 @@ async function loadMarkdown(slug) {
 document.querySelectorAll("details").forEach(detail => {
   detail.addEventListener("toggle", function () {
     if (this.open) {
+      // Close all other sections
       document.querySelectorAll("details").forEach(other => {
         if (other !== this) {
           other.removeAttribute("open");
         }
       });
+      // Scroll the current section to the top of the viewport
+      this.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
 });
