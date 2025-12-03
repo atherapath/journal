@@ -25,11 +25,10 @@ h1, h2, h3, h4, h5, h6, code, pre {
 
 img {
   box-shadow: 0 0 5px #33ccff, 0 0 5px #66ffff, 0 0 5px #ccff66;
-  width: 100%; /* will scale down on smaller screens */
+  max-width: 100%;
   height: auto;
   display: block;
-  margin: 1.5rem 0;
-  padding: 6px;
+  margin: 0.5rem 0;
 }
 
 a {
