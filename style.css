@@ -10,6 +10,7 @@ html, body {
   width: 100%; /* allows it to shrink on small screens */
   border-radius: 5px;
   box-shadow: 0 0 10px 2.5px #0f0;
+  margin: 5px;
 }
 
 hr {
