@@ -9,11 +9,13 @@ hr {
   border: none;
   border-top: 1px solid #0f0;
   box-shadow: 0 0 2.5px 0.5px #0f0;
-  margin: 0.5rem 0;
+  margin: 0;      /* no spacing */
+  padding: 0;     /* no padding */
 }
 
-h1, h2, h3, h4, h5, h6, code, pre {
+h1, h2, h3, h4, h5, h6, p, code, pre {
   color: #FFFFFF;
+  padding: 0.5rem 0; /* breathing room for text */
 }
 
 img {
@@ -52,20 +54,22 @@ code, pre {
 }
 
 #content {
-  border: 2px solid lime;
-  box-shadow: 0 0 10px lime;
+  position: relative;
+  padding: 2.5px;
+  background-color: #111;
+  border: 2px solid #0f0;       /* neon border */
+  border-radius: 2.5px;
+  box-shadow: 0 0 5px 2.5px #0f0;
 }
 
 #back-to-top {
-    position: fixed;
-    right: 0.5em;   /* final three right columns */
-    bottom: 1em;
-    font-size: 2em; /* about three emoji size */
-    text-decoration: none;
-    z-index: 999;
-  }
-
-
+  position: fixed;
+  right: 0.5em;
+  bottom: 1em;
+  font-size: 2em;
+  text-decoration: none;
+  z-index: 999;
+}
 
 /* Week navigation styling
 .week-nav {
