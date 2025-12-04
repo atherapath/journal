@@ -3,7 +3,6 @@ html, body {
   color: #FFFFFF;
   font-family: monospace;
   margin: 0;
-  padding: .5rem;
 }
 
 hr {
@@ -54,7 +53,7 @@ code, pre {
 
 #content {
   position: relative;
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #111;
   border-radius: 2.5px;
   box-shadow: 0 0 5px 2.5px #0f0;
