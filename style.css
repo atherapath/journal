@@ -22,6 +22,9 @@ img {
   height: auto;
   display: block;
   margin: 0.5rem 0;
+  box-shadow: 0 0 5px #33ccff,
+              0 0 5px #66ffff,
+              0 0 5px #ccff66;
 }
 
 a {
@@ -31,8 +34,7 @@ a {
 
 details {
   background-color: #004F1F;
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 5px;
 }
 
 details summary {
@@ -54,11 +56,18 @@ code, pre {
   position: relative;
   padding: 1rem;
   background-color: #111;
-  border-radius: 10px;
-  box-shadow: 0 0 20px 5px #0f0;
+  border-radius: 2.5px;
+  box-shadow: 0 0 5px 2.5px #0f0;
 }
 
-
+#back-to-top {
+    position: fixed;
+    right: 0.5em;   /* final three right columns */
+    bottom: 1em;
+    font-size: 2em; /* about three emoji size */
+    text-decoration: none;
+    z-index: 999;
+  }
 
 
 
