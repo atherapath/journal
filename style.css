@@ -2,14 +2,11 @@ html, body {
   background-color: #000;
   color: #FFFFFF;
   font-family: monospace;
-  margin: 0;
 }
 
 .content-wrapper {
   max-width: 800px;
   width: 100%; /* allows it to shrink on small screens */
-  border-radius: 5px;
-  box-shadow: 0 0 5px 2.5px #0f0;
 }
 
 hr {
@@ -58,11 +55,4 @@ blockquote {
 code, pre {
   color: #0f0;
   background-color: #008D91;
-}
-
-#content {
-  /* position: relative; */
-  background-color: #111;
-  padding: 5px;
-  overflow: visible;
 }
