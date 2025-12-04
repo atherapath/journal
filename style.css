@@ -10,7 +10,6 @@ html, body {
   width: 100%; /* allows it to shrink on small screens */
   border-radius: 5px;
   box-shadow: 0 0 5px 2.5px #0f0;
-  margin: 5px;
 }
 
 hr {
@@ -62,8 +61,8 @@ code, pre {
 }
 
 #content {
-  position: relative;
+  /* position: relative; */
   background-color: #111;
-  padding: 10px;       /* gives breathing room for glow */
-  overflow: visible;   /* ensures shadows aren’t cut off */
+  padding: 5px;
+  overflow: visible;
 }
