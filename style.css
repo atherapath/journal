@@ -9,7 +9,7 @@ html, body {
   max-width: 800px;
   width: 100%; /* allows it to shrink on small screens */
   border-radius: 5px;
-  box-shadow: 0 0 10px 2.5px #0f0;
+  box-shadow: 0 0 5px 2.5px #0f0;
   margin: 5px;
 }
 
@@ -52,7 +52,6 @@ details summary {
 }
 
 blockquote {
-  display: block;
   border-left: 2px solid #0f0;
   padding: 5px;
 }
@@ -65,6 +64,6 @@ code, pre {
 #content {
   position: relative;
   background-color: #111;
-  padding: 5px;       /* gives breathing room for glow */
+  padding: 10px;       /* gives breathing room for glow */
   overflow: visible;   /* ensures shadows aren’t cut off */
 }
