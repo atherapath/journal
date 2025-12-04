@@ -3,7 +3,7 @@ html, body {
   color: #FFFFFF;
   font-family: monospace;
   margin: 0;
-  padding: 1rem;
+  padding: .5rem;
 }
 
 hr {
@@ -34,7 +34,7 @@ a {
 
 details {
   background-color: #004F1F;
-  padding: 5px;
+  padding: 2px;
 }
 
 details summary {
