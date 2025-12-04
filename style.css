@@ -53,13 +53,13 @@ details summary {
 
 blockquote {
   border-left: 2px solid #0f0;
-  Paddin: 5px
+  Padding: 5px
   Background-color: #008D91;
 }
 
 code, pre {
   color: #0f0;
-  background-color: #001;
+  background-color: #008D91;
 }
 
 #content {
