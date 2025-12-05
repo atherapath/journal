@@ -69,25 +69,23 @@ code, pre {
   z-index: 999;
 }
 
-/* Week navigation styling
-.week-nav {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 2rem;
+#present-moment-link {
+    color: #ff0; /* Yellow Neon */
+    text-shadow: 0 0 5px #ff0;
+    text-decoration: none;
+    font-family: monospace;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ff0;
+    box-shadow: 0 0 3px #ff0;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.2s;
 }
 
-.week-nav button {
-  flex: 1;
-  padding: 1rem;
-  font-size: 1rem;
-  background-color: #0f0;
-  color: #000;
-  border: 2px solid #222;
-  border-radius: 6px;
-  cursor: pointer;
+#present-moment-link:hover {
+    color: #fff;
+    background-color: #001A00;
+    text-shadow: 0 0 8px #fff, 0 0 15px #ff0;
 }
-
-.week-nav button:hover {
-  background-color: #1f1;
-}*/

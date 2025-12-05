@@ -73,16 +73,57 @@ document.querySelectorAll("details").forEach(detail => {
     document.querySelectorAll("details").forEach(d => d.removeAttribute("open"));
   });
 
-- [ ] 
   } catch (err) {
     content.innerHTML = `<p style="color:red;">Failed to load ${file}: ${err.message}</p>`;
     console.error(err);
   }
 }
 
+// --- NEW FUNCTION: The core logic for Waddy form (wwddyy) ---
+/**
+ * Generates the correct wwddyy slug based on ISO 8601 (dd is Monday's day of month).
+ * @param {Date} date The date to base the slug on.
+ * @returns {string} The slug (e.g., '490125').
+ */
+function generateWeekSlug(date) {
+    // --- 1. Calculate the Monday of the current ISO week ---
+    let day = date.getDay();
+    day = day === 0 ? 7 : day; // Normalize day to 1=Monday, 7=Sunday
+    const mondayOffset = day - 1;
+    const monday = new Date(date);
+    monday.setDate(date.getDate() - mondayOffset);
+
+    // --- 2. Calculate the ISO Week Number (ww) ---
+    const thursday = new Date(monday);
+    thursday.setDate(monday.getDate() + 3);
+    const yearStart = new Date(thursday.getFullYear(), 0, 4);
+    const diffTime = thursday.getTime() - yearStart.getTime();
+    const weekNumber = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 7)) + 1;
+
+    // --- 3. Format Components (wwddyy) ---
+    const ww = String(weekNumber).padStart(2, '0');
+    const yy = String(thursday.getFullYear()).slice(-2);
+    
+    // --- 4. USE STANDARD 'dd' ---
+    const dd = String(monday.getDate()).padStart(2, '0');
+
+    return `${ww}${dd}${yy}`;
+}
+
 // --- Initial load and listener ---
 let slug = getSlugFromHash();
 loadMarkdown(slug);
+
+// --- NEW LISTENER FOR PRESENT MOMENT TEST ---
+document.getElementById('present-moment-link').addEventListener('click', (e) => {
+    e.preventDefault(); // Stop the link from acting like a regular hash link
+    
+    // 1. Calculate the correct slug for today's date using the new function.
+    const currentSlug = generateWeekSlug(new Date()); 
+    
+    // 2. Set the hash, which triggers the existing hashchange listener.
+    window.location.hash = `#${currentSlug}`;
+});
 
 window.addEventListener('hashchange', () => {
   slug = getSlugFromHash();
