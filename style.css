@@ -53,6 +53,10 @@ blockquote {
 code, pre {
   color: #0f0;
   background-color: #001;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+
 }
 
 #content {
