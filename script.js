@@ -55,7 +55,9 @@ document.querySelectorAll("details").forEach(detail => {
   detail.addEventListener("toggle", function () {
     if (this.open) {
       // Close all other sections
-      document.querySelectorAll("details").forEach(other => {
+      
+      document.querySelectorAll('#content > details').forEach(other => {
+
         if (other !== this) {
           other.removeAttribute("open");
         }
