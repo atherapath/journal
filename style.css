@@ -37,6 +37,7 @@ a {
 details {
   background-color: #004F1F;
   padding: 5px;
+  text-align: left;
 }
 
 details summary {
