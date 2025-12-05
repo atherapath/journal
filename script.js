@@ -51,24 +51,7 @@ async function loadMarkdown(slug) {
     content.innerHTML = html;
     wrapImageBlocks();
     
-document.querySelectorAll("details").forEach(detail => {
-  detail.addEventListener("toggle", function () {
-    if (this.open) {
-      // Close all other sections
-      
-      document.querySelectorAll('#content > details').forEach(other => {
-
-        if (other !== this) {
-          other.removeAttribute("open");
-        }
-      });
-      // Scroll the current section to the top of the viewport
-      this.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  });
-});
-
-// Scroll to top and close all <details>
+// Scroll to top and close all ***bosh*** <details>
   document.getElementById("back-to-top").addEventListener("click", function (e) {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
