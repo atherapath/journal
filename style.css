@@ -56,7 +56,15 @@ code, pre {
   white-space: pre-wrap;
   word-wrap: break-word;
   max-width: 100%;
-
+  code, pre {
+  color: #0f0;
+  background-color: #001;
+  /* Line Wrapping Rules (from last time) */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+  padding: 0.75rem; /* Adds space inside the code block */
+  line-height: 1.4; /* Increases vertical spacing between lines */
 }
 
 #content {
