@@ -55,6 +55,24 @@ code {
   white-space: normal;
 }
 
+.copy-btn {
+  background-color: #001;
+  color: #0f0;
+  border: 1px solid #0f0;
+  border-radius: 3px;
+  padding: 0.3rem 0.6rem;
+  font-family: monospace;
+  cursor: pointer;
+  float: right;
+  margin: 0.2rem;
+  box-shadow: 0 0 3px #0f0;
+  font-size: 0.8rem;
+}
+.copy-btn:hover {
+  background-color: #0f0;
+  color: #000;
+}
+
 /* Block code — for full fenced blocks */
 pre {
   background-color: #001;
@@ -74,14 +92,6 @@ pre {
 pre code {
   color: #0f0;
   font-size: 0.95rem;
-}
-  
-  /* Line Wrapping Rules (from last time) */
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  max-width: 100%;
-  padding: 0.75rem; /* Adds space inside the code block */
-  line-height: 1.4; /* Increases vertical spacing between lines */
 }
 
 #content {

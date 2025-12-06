@@ -51,6 +51,20 @@ async function loadMarkdown(slug) {
     content.innerHTML = html;
     wrapImageBlocks();
     
+// --- COPY BUTTON INJECTION ---
+document.querySelectorAll("pre code").forEach((block) => {
+  const button = document.createElement("button");
+  button.textContent = "Copy";
+  button.className = "copy-btn";
+  button.addEventListener("click", () => {
+    navigator.clipboard.writeText(block.innerText).then(() => {
+      button.textContent = "Copied!";
+      setTimeout(() => button.textContent = "Copy", 2000);
+    });
+  });
+  block.parentNode.insertBefore(button, block);
+});
+    
 // Scroll to top and close all ***bosh*** <details>
   document.getElementById("back-to-top").addEventListener("click", function (e) {
     e.preventDefault();
