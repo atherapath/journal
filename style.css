@@ -45,17 +45,36 @@ details summary {
   font-weight: bold;
 }
 
-blockquote {
-  border-left: 2px solid #0f0;
-  padding-left: 1rem;
+/* Inline code — for `like this` */
+code {
+  background-color: #001;
+  color: #0f0;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.95em;
+  white-space: normal;
 }
 
-code, pre {
-  color: #0f0;
+/* Block code — for full fenced blocks */
+pre {
   background-color: #001;
+  padding: 1rem;
+  margin: 1rem auto;
+  border: 1px solid #0f0;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #0f0;
+  font-family: monospace;
   white-space: pre-wrap;
   word-wrap: break-word;
-  max-width: 100%;
+  line-height: 1.5;
+  max-width: 90vw;
+  overflow-x: auto;
+}
+
+pre code {
+  color: #0f0;
+  font-size: 0.95rem;
+}
   
   /* Line Wrapping Rules (from last time) */
   white-space: pre-wrap;
