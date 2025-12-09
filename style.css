@@ -34,6 +34,34 @@ a {
   text-decoration: underline;
 }
 
+/* --- Styling for Blockquotes (The Cool Neon Look) --- */
+blockquote {
+  /* Override body's center alignment so text aligns left inside the quote box */
+  text-align: left;           
+  
+  /* Positions the quote block for responsiveness and adds vertical spacing */
+  margin: 1rem auto;          
+  max-width: 90vw;
+  
+  /* The essential Neon Left Line */
+  border-left: 4px solid #0f0; 
+  
+  /* Breathing room and separation from the border */
+  padding: 1rem 1rem 1rem 1.5rem; 
+
+  /* Adds dark background and neon glow for the "cool" look */
+  background-color: #001;     
+  box-shadow: 0 0 5px #0f0;   
+  border-radius: 5px;
+}
+
+/* Ensures paragraphs inside blockquotes don't inherit unnecessary vertical padding */
+blockquote p {
+  padding: 0; 
+  margin: 0;
+}
+
+
 details {
   background-color: #004F1F;
   padding: 5px;
@@ -107,6 +135,9 @@ pre code {
   font-size: 2em;
   text-decoration: none;
   z-index: 999;
+  top: 50%;
+  transform: translateY(-50%);
+
 }
 
 #present-moment-link {
