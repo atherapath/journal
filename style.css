@@ -131,7 +131,6 @@ pre code {
 #back-to-top {
   position: fixed;
   right: 0.5em;
-  bottom: 1em;
   font-size: 2em;
   text-decoration: none;
   z-index: 999;
