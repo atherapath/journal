@@ -158,3 +158,26 @@ pre code {
     background-color: #001A00;
     text-shadow: 0 0 8px #fff, 0 0 15px #ff0;
 }
+
+/* Custom styling for the new Captain's Log button */
+#captains-log-link {
+    color: #33ccff; /* Bright Cyan/Blue Neon */
+    text-shadow: 0 0 5px #33ccff;
+    text-decoration: none;
+    font-family: monospace;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border: 1px solid #33ccff;
+    box-shadow: 0 0 3px #33ccff;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-left: 1rem; /* Add some space between the two buttons */
+    transition: all 0.2s;
+}
+
+#captains-log-link:hover {
+    color: #fff;
+    background-color: #00001A; /* Very dark blue background on hover */
+    text-shadow: 0 0 8px #fff, 0 0 15px #33ccff;
+}
