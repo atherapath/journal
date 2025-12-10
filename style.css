@@ -134,8 +134,7 @@ pre code {
   font-size: 2em;
   text-decoration: none;
   z-index: 999;
-  top: 75%;
-  transform: translateY(-50%);
+  top: 90%;
 
 }
 
