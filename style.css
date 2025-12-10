@@ -130,11 +130,11 @@ pre code {
 
 #back-to-top {
   position: fixed;
-  right: 0.5em;
+  Left: 0.5em;
   font-size: 2em;
   text-decoration: none;
   z-index: 999;
-  top: 50%;
+  top: 75%;
   transform: translateY(-50%);
 
 }
