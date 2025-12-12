@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waddy's Contextual Editor</title>
+    <style>
+        /* BASE STYLES */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding-bottom: 70px; /* Crucial: Creates space for the fixed dock */
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        /* 1. THE ACTION DOCK (THE BAR AT THE BOTTOM) */
+        #action-dock {
+            position: fixed; /* Locks the bar in place */
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            background-color: #333; /* Dark background */
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensures it is always on top */
+        }
+
+        .dock-button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            color: #fff;
+        }
+        .dock-button.primary { background-color: #007bff; }
+        .dock-button.secondary { background-color: #6c757d; }
+
+        /* 2. THE EDITOR & KEYBOARD (HIDDEN BY DEFAULT) */
+        /* IMPORTANT: This class controls all visibility */
+        .hidden {
+            display: none !important; 
+        }
+
+        #content-editor {
+            width: 90%;
+            height: 250px;
+            padding: 15px;
+            margin: 20px auto; /* Centers the box */
+            display: block;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #333;
+            font-size: 16px;
+            resize: none;
+        }
+
+        #virtual-keyboard {
+            width: 90%;
+            margin: 0 auto 10px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 10px;
+            background-color: #555;
+            border-radius: 8px;
+        }
+
+        /* Keyboard Styling (Simplified from previous) */
+        .key-row { display: flex; gap: 5px; justify-content: center; }
+        .key, .macro-key { flex-grow: 1; padding: 10px 5px; border: none; border-radius: 4px; text-align: center; }
+        .key { background-color: #888; color: #fff; }
+        .macro-key { background-color: #28a745; color: #fff; font-weight: bold; }
+        .key:active, .macro-key:active { transform: scale(0.98); }
+    </style>
+</head>
+<body>
+    
+    <textarea id="content-editor" class="hidden" placeholder="Type or Dictate your entry here..."></textarea>
+    
+    <div id="virtual-keyboard" class="hidden">
+        <div class="key-row">
+            <button class="macro-key" data-char="LINK">Link Macro</button>
+            <button class="macro-key" data-char="TAG">#Tag AI</button>
+            <button class="key" data-char="Q">Q</button>
+            <button class="key" data-char="W">W</button>
+            <button class="key" data-char="E">E</button>
+            <button class="key" data-char=" ">Space</button>
+        </div>
+        <div class="key-row">
+            <button class="key" data-char="A">A</button>
+            <button class="key" data-char="S">S</button>
+            <button class="key" data-char="D">D</button>
+            <button class="key" data-char="F">F</button>
+            <button class="key" data-char="\n">Enter</button>
+        </div>
+    </div>
+
+
+    <div id="action-dock">
+        <button class="dock-button primary" id="toggle-editor-btn">Enter Text</button>
+        <button class="dock-button secondary" id="toggle-keyboard-btn" disabled>Use Leila Keyboard</button>
+        <button class="dock-button secondary" id="copy-all-btn" disabled>Select All / Copy All</button>
+    </div>
+
+
+    <script>
+        // Get the main elements
+        const editor = document.getElementById('content-editor');
+        const keyboard = document.getElementById('virtual-keyboard');
+        const toggleEditorBtn = document.getElementById('toggle-editor-btn');
+        const toggleKeyboardBtn = document.getElementById('toggle-keyboard-btn');
+        const copyAllBtn = document.getElementById('copy-all-btn');
+        const allKeys = keyboard.querySelectorAll('.key, .macro-key');
+
+        // --- CORE TOGGLE FUNCTIONALITY ---
+        const toggleVisibility = (element) => {
+            element.classList.toggle('hidden');
+        };
+
+        // 1. "Enter Text" Button Logic
+        toggleEditorBtn.addEventListener('click', () => {
+            toggleVisibility(editor);
+            
+            const isVisible = !editor.classList.contains('hidden');
+            toggleKeyboardBtn.disabled = !isVisible;
+            copyAllBtn.disabled = !isVisible;
+
+            toggleEditorBtn.textContent = isVisible ? 'Close Editor' : 'Enter Text';
+
+            if (isVisible) {
+                editor.focus();
+            } else {
+                keyboard.classList.add('hidden');
+                toggleKeyboardBtn.textContent = 'Use Leila Keyboard';
+            }
+        });
+
+        // 2. "Use Leila Keyboard" Button Logic
+        toggleKeyboardBtn.addEventListener('click', () => {
+            toggleVisibility(keyboard);
+            const isVisible = !keyboard.classList.contains('hidden');
+            toggleKeyboardBtn.textContent = isVisible ? 'Hide Leila Keyboard' : 'Use Leila Keyboard';
+            editor.focus();
+        });
+
+        // 3. "Copy All" Button Logic
+        copyAllBtn.addEventListener('click', () => {
+            editor.select();
+            document.execCommand('copy');
+            alert("Content copied to clipboard!");
+            editor.focus(); 
+        });
+
+        // --- VIRTUAL KEYBOARD TYPING LOGIC (The "Typewriter") ---
+        allKeys.forEach(button => {
+            button.addEventListener('click', function() {
+                if (editor.classList.contains('hidden')) return; 
+                
+                const char = this.getAttribute('data-char');
+                
+                // Simple Macro & Character Logic
+                if (char === 'LINK') {
+                    editor.value += ' [Captain\'s Log Entry](http://your-captain-log.com/cap-entry)';
+                } else if (char === 'TAG') {
+                    editor.value += ' #AI_Attack_Model_08';
+                } else if (char === ' ') {
+                    editor.value += ' ';
+                } else if (char === '\n') {
+                    editor.value += '\n';
+                } else {
+                    editor.value += char;
+                }
+                
+                editor.focus();
+            });
+        });
+    </script>
+</body>
+</html>
