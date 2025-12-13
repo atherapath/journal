@@ -73,6 +73,25 @@ details summary {
   font-weight: bold;
 }
 
+/* Hide default arrow */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Add custom orange arrow */
+details summary::before {
+  content: "▼";        /* Down arrow */
+  color: orange;
+  margin-right: 6px;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+/* Flip arrow when open */
+details[open] summary::before {
+  transform: rotate(180deg);
+}
+
 /* Inline code — for `like this` */
 code {
   background-color: #001;
