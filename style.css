@@ -61,9 +61,7 @@ blockquote p {
   margin: 0;
 }
 
-
 details {
-  display: inline-block;
   background-color: #004F1F;
   padding: 5px;
   text-align: left;
