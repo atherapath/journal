@@ -204,32 +204,31 @@ pre code {
     text-shadow: 0 0 8px #fff, 0 0 15px #33ccff;
 }
 
-/* 4. NEON TABLE STYLING */
+/*/* 4. NEON TABLE STYLING - ADJUSTED FOR BETTER FIT */
 
 /* Style for the table container itself */
 table {
-    width: 90%; /* Match the width of the editor/content */
+    /* Reduced width slightly to ensure margin on either side of the table */
+    width: 88%; 
     margin: 20px auto; /* Center the table */
-    border-collapse: collapse; /* Ensure single borders */
+    border-collapse: collapse; 
     /* Neon border and glow effect */
-    border: 3px solid #00ffff; /* Cyan neon color for border */
-    box-shadow: 0 0 10px #00ffff, /* Inner glow */
-                0 0 20px rgba(0, 0, 0, 0.2); /* Subtle outer shadow */
+    border: 2px solid #00ffff; /* Slightly thinner border */
+    box-shadow: 0 0 8px #00ffff; /* Slightly less intense glow */
 }
 
 /* Style for table headers and data cells */
 th, td {
-    border: 1px solid #00ccff; /* A slightly lighter cyan for internal cell borders */
-    padding: 10px;
+    border: 1px solid #00ccff;
+    padding: 8px; /* Slightly reduced padding */
     text-align: left;
-    background-color: rgba(0, 0, 0, 0.05); /* Very slight background tint */
+    background-color: rgba(0, 0, 0, 0.2); /* Darker background to separate from body */
 }
 
 /* Style for the table header row */
 th {
-    background-color: #007bff; /* Use the primary blue color for headers */
+    background-color: #007bff;
     color: white;
     font-weight: bold;
-    /* Add a subtle neon text shadow to the header text */
-    text-shadow: 0 0 5px #00ffff;
+    text-shadow: 0 0 4px #00ffff; /* Slightly less intense text shadow */
 }
