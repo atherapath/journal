@@ -210,7 +210,7 @@ pre code {
 table {
     /* Reduced width slightly to ensure margin on either side of the table */
     width: 80%; 
-    margin: 20px auto; /* Center the table */
+    margin: 5px auto; /* Center the table */
     border-collapse: collapse; 
     /* Neon border and glow effect */
     border: 2px solid #00ffff; /* Slightly thinner border */
