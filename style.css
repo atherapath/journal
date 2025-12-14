@@ -209,7 +209,7 @@ pre code {
 /* Style for the table container itself */
 table {
     /* Reduced width slightly to ensure margin on either side of the table */
-    width: 88%; 
+    width: 80%; 
     margin: 20px auto; /* Center the table */
     border-collapse: collapse; 
     /* Neon border and glow effect */
