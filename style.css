@@ -203,3 +203,33 @@ pre code {
     background-color: #00001A; /* Very dark blue background on hover */
     text-shadow: 0 0 8px #fff, 0 0 15px #33ccff;
 }
+
+/* 4. NEON TABLE STYLING */
+
+/* Style for the table container itself */
+table {
+    width: 90%; /* Match the width of the editor/content */
+    margin: 20px auto; /* Center the table */
+    border-collapse: collapse; /* Ensure single borders */
+    /* Neon border and glow effect */
+    border: 3px solid #00ffff; /* Cyan neon color for border */
+    box-shadow: 0 0 10px #00ffff, /* Inner glow */
+                0 0 20px rgba(0, 0, 0, 0.2); /* Subtle outer shadow */
+}
+
+/* Style for table headers and data cells */
+th, td {
+    border: 1px solid #00ccff; /* A slightly lighter cyan for internal cell borders */
+    padding: 10px;
+    text-align: left;
+    background-color: rgba(0, 0, 0, 0.05); /* Very slight background tint */
+}
+
+/* Style for the table header row */
+th {
+    background-color: #007bff; /* Use the primary blue color for headers */
+    color: white;
+    font-weight: bold;
+    /* Add a subtle neon text shadow to the header text */
+    text-shadow: 0 0 5px #00ffff;
+}
