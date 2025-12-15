@@ -1,5 +1,3 @@
-
-
 // Get the main elements
 const editor = document.getElementById('content-editor');
 const btnCreate = document.getElementById('btn-create');
@@ -195,14 +193,58 @@ const createSelectMenu = () => {
 };
 createSelectMenu(); 
 
-// 2. AMEND Menu (Copy, Cut, Delete, Enter)
+
+// --- NEW SAVE FUNCTION: IMPLEMENTS YOUR ARCHIVE LOGIC ---
+const handleArchiveSave = () => {
+    const logContent = editor.value.trim();
+
+    if (editor.classList.contains('hidden') || !logContent) {
+        alert("Please 'Create' the editor and enter content before archiving.");
+        return;
+    }
+
+    // 1. Extract the first line
+    const firstLine = logContent.split('\n')[0].trim();
+    
+    // 2. Replace ALL spaces with underscores (the exact rule)
+    let filename = firstLine.replace(/\s+/g, '_');
+    
+    // 3. Append the required extension - CHANGED FROM .txt TO .md
+    filename = filename + '.md'; 
+
+    // FALLBACK: If the filename is empty
+    if (filename.length < 5) {
+         const dateSuffix = '_' + new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
+         filename = 'Sovereign_Log_Entry' + dateSuffix + '.md'; // Changed fallback to .md
+    }
+
+    // 4. Trigger the download using the new, dynamic filename
+    const blob = new Blob([logContent], {type: 'text/markdown;charset=utf-8'}); // Content type set to Markdown
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename; // This is the dynamic name you created
+    document.body.appendChild(a);
+    
+    a.click();
+    
+    // Cleanup
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    alert(`Markdown Log prepared for download. Look for '${filename}' in your Downloads folder.`);
+};
+
+// 2. AMEND Menu (Copy, Cut, Delete, Enter, ARCHIVE)
 const createAmendMenu = () => {
     // Button data: [text, class, command]
     const buttons = [
         ['Copy', 'menu-button amend', 'copy'],
         ['Cut', 'menu-button amend', 'cut'], 
         ['Delete', 'menu-button amend', 'delete'],
-        ['Enter', 'menu-button amend', 'enter'], // <<< ADDED ENTER BUTTON
+        ['Enter', 'menu-button amend', 'enter'], 
+        ['Archive', 'menu-button amend', 'archiveLog'], // <<< NEW SAVE BUTTON ADDED HERE
     ];
 
     amendMenu.innerHTML = '';
@@ -410,6 +452,9 @@ amendMenu.addEventListener('click', (e) => {
         editor.selectionStart = start + newline.length;
         editor.selectionEnd = editor.selectionStart;
 
+    } else if (command === 'archiveLog') { // <<< NEW SAVE ACTION
+        handleArchiveSave();
+        
     } else {
         // Execute the native browser command (copy, cut, delete)
         document.execCommand(command);
