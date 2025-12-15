@@ -85,7 +85,7 @@ body {
 
 #content-editor {
     width: 90%;
-    height: 250px;
+    height: 200px;
     padding: 15px;
     margin: 20px auto;
     display: block;
@@ -104,3 +104,42 @@ body {
   font-size: 1.2em; /* Ensures the character is clearly visible */
 }
 
+/* 4. MARKDOWN VIEWER STYLES (NEW) */
+#markdown-viewer {
+    width: 90%;
+    min-height: 200px;
+    padding: 15px;
+    margin: 20px auto;
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7; /* Light background for contrast */
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6; 
+}
+
+/* Basic Markdown element styling for the preview */
+#markdown-viewer h1, #markdown-viewer h2, #markdown-viewer h3 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.2em;
+}
+#markdown-viewer strong {
+    font-weight: bold;
+}
+#markdown-viewer em {
+    font-style: italic;
+}
+#markdown-viewer ul, #markdown-viewer ol {
+    padding-left: 20px;
+}
+
+/* 5. ARCHIVE BUTTON STYLE (NEW) */
+.dock-button.success {
+    background-color: #5cb85c; /* Green color for 'Save/Success' */
+}
+.dock-button.success:active {
+    background-color: #4cae4c;
+}
