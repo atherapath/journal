@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>√ Sovereign Voice Protocol √</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="svp.css">
+</head>
+<body>
+  <header>
+  <a href="#" id="present-moment-link">present moment 🎁</a>
+  <a href="#captain" id="captains-log-link">Captain's Log 🚢</a>
+  </header>
+    
+    <textarea id="content-editor" class="hidden" placeholder="Type or Dictate your entry here..."></textarea>
+    
+    <div id="markdown-viewer" class="hidden"></div>
+    
+    <div id="floating-menu-container">
+        <div id="select-menu" class="floating-menu hidden"></div>
+        <div id="amend-menu" class="floating-menu hidden"></div>
+    </div>
+
+    <div id="action-dock">
+    <button class="dock-button primary" id="btn-create">Create</button> 
+    <button class="dock-button secondary" id="btn-load">Load MD</button>
+    <input type="file" id="file-input" accept=".md" style="display: none;">
+    <button class="dock-button primary" id="btn-select">Select</button>
+    <button class="dock-button primary" id="btn-amend">Amend</button>
+    <button class="dock-button success" id="btn-archive">Archive</button> 
+</div>
+    
+    <script src="svp.js"></script>
+   
+</body>
+</html>
