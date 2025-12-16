@@ -157,7 +157,7 @@ const renderMarkdown = (markdown) => {
 
 
 
-// --- CORE LOGIC: CREATE / SMART-CLOSE / PREVIEW TOGGLE (Untouched) ---
+// --- CORE LOGIC: CREATE / SMART-CLOSE / PREVIEW TOGGLE ---
 btnCreate.addEventListener('click', () => {
     
     if (editor.classList.contains('hidden')) {
@@ -247,12 +247,242 @@ const handleArchiveSave = () => {
 btnArchive.addEventListener('click', handleArchiveSave);
 
 
-// --- MENU CONTENT GENERATION (Untouched) ---
+// --- MENU CONTENT GENERATION ---
 
-// 1. SELECT Menu (Untouched)
+// 1. SELECT Menu 
 const createSelectMenu = () => {
     const buttons = [
         ['Line', 'menu-button', 'selectLine'], 
         ['Left', 'menu-button nav', 'moveLeft'],
         ['Right', 'menu-button nav', 'moveRight'],
-        ['Block', 'menu-button', 'selectBlock
+        ['Block', 'menu-button', 'selectBlock'],
+        ['Word', 'menu-button', 'selectWord'],
+        ['All', 'menu-button', 'selectAll'], 
+    ];
+
+    selectMenu.innerHTML = ''; 
+    buttons.forEach(data => {
+        const button = document.createElement('button');
+        button.textContent = data[0];
+        button.className = data[1];
+        button.dataset.action = data[2];
+        selectMenu.appendChild(button);
+    });
+};
+createSelectMenu(); 
+
+
+// 2. AMEND Menu 
+const createAmendMenu = () => {
+    const buttons = [
+        ['Copy', 'menu-button amend', 'copy'],
+        ['Cut', 'menu-button amend', 'cut'], 
+        ['Delete', 'menu-button amend', 'delete'],
+        ['Enter', 'menu-button amend', 'enter'], 
+    ];
+
+    amendMenu.innerHTML = '';
+    buttons.forEach(data => {
+        const button = document.createElement('button');
+        button.textContent = data[0];
+        button.className = data[1];
+        button.dataset.command = data[2];
+        amendMenu.appendChild(button);
+    });
+};
+createAmendMenu(); 
+
+
+// --- COMPLEX SELECTION LOGIC ---
+
+const getLine = (text, position) => {
+    const lines = text.split('\n');
+    let cumulativeLength = 0;
+    for (let i = 0; i < lines.length; i++) {
+        const lineLength = lines[i].length;
+        if (position >= cumulativeLength && position <= cumulativeLength + lineLength + 1) {
+            return { start: cumulativeLength, end: cumulativeLength + lineLength, lineNumber: i, lineText: lines[i] };
+        }
+        cumulativeLength += lineLength + 1;
+    }
+    return null;
+};
+const handleMovement = (direction) => {
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    const isSelected = start !== end;
+    const text = editor.value;
+    let newStart = start;
+    let newEnd = end;
+    if (direction === 'Left' || direction === 'Right') {
+        if (isSelected) {
+            if (direction === 'Left') {
+                newEnd = Math.max(start, end - 1);
+            } else {
+                newEnd = Math.min(text.length, end + 1);
+            }
+        } else {
+            newStart = direction === 'Left' ? Math.max(0, start - 1) : Math.min(text.length, start + 1);
+            newEnd = newStart;
+        }
+    }
+    editor.selectionStart = newStart;
+    editor.selectionEnd = newEnd;
+    focusEditor();
+};
+const handleSelectLine = () => {
+    const text = editor.value;
+    const pos = editor.selectionStart;
+    const lineInfo = getLine(text, pos);
+    if (lineInfo) {
+        editor.selectionStart = lineInfo.start;
+        editor.selectionEnd = lineInfo.end;
+    }
+    focusEditor();
+};
+const handleSelectBlock = () => {
+    const text = editor.value;
+    const pos = editor.selectionStart;
+    let blockStart = pos;
+    while (blockStart > 0) {
+        if (text[blockStart - 1] === '\n' && (blockStart - 2 < 0 || text[blockStart - 2] === '\n')) {
+            blockStart = blockStart;
+            break;
+        }
+        blockStart--;
+    }
+    let blockEnd = pos;
+    while (blockEnd < text.length) {
+        if (text[blockEnd] === '\n' && (blockEnd + 1 >= text.length || text[blockEnd + 1] === '\n')) {
+            break;
+        }
+        blockEnd++;
+    }
+    editor.selectionStart = blockStart;
+    editor.selectionEnd = blockEnd;
+    focusEditor();
+};
+const handleSelectWord = () => {
+    const text = editor.value;
+    const pos = editor.selectionStart;
+    let wordStart = pos;
+    let wordEnd = pos;
+    while (wordStart > 0 && /\S/.test(text[wordStart - 1])) {
+        wordStart--;
+    }
+    while (wordEnd < text.length && /\S/.test(text[wordEnd])) {
+        wordEnd++;
+    }
+    editor.selectionStart = wordStart;
+    editor.selectionEnd = wordEnd;
+    focusEditor();
+};
+
+// --- MENU EVENT LISTENERS ---
+
+// 1. SELECT Menu Handler
+btnSelect.addEventListener('click', () => {
+    if (!editor.classList.contains('hidden')) { 
+        toggleMenu(selectMenu, btnSelect);
+    }
+});
+
+selectMenu.addEventListener('click', (e) => {
+    const action = e.target.dataset.action;
+    if (!action) return;
+
+    switch (action) {
+        case 'moveLeft':
+        case 'moveRight':
+            handleMovement(action.replace('move', ''));
+            break;
+        case 'selectLine':
+            handleSelectLine();
+            break;
+        case 'selectBlock':
+            handleSelectBlock();
+            break;
+        case 'selectWord':
+            handleSelectWord();
+            break;
+        case 'selectAll':
+            editor.select();
+            focusEditor();
+            break;
+    }
+});
+
+
+// 2. AMEND Menu Handler
+btnAmend.addEventListener('click', () => {
+    if (!editor.classList.contains('hidden')) { 
+        toggleMenu(amendMenu, btnAmend);
+    }
+});
+
+amendMenu.addEventListener('click', (e) => {
+    const command = e.target.dataset.command;
+    if (!command) return;
+
+    if (command === 'enter') {
+        // --- RELIABLE NEWLINE INSERTION LOGIC ---
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+        const newline = '\n'; 
+        
+        editor.value = editor.value.substring(0, start) + newline + editor.value.substring(end);
+        
+        editor.selectionStart = start + newline.length;
+        editor.selectionEnd = editor.selectionStart;
+
+    } else {
+        // Standard copy/cut/delete
+        document.execCommand(command);
+    }
+    
+    if (command === 'copy' || command === 'cut') {
+        alert(`Selection ${command} to clipboard!`);
+    }
+    
+    focusEditor();
+});
+
+
+// --- NEW LINE MACRO (The "Tiny Snippet") ---
+editor.addEventListener('input', () => {
+    const searchPhrase = /New line/gi; 
+    const replacement = '\n'; 
+
+    const originalValue = editor.value;
+    const newValue = originalValue.replace(searchPhrase, replacement);
+
+    if (originalValue !== newValue) {
+        
+        const lengthDifference = originalValue.length - newValue.length;
+        const currentCursorPos = editor.selectionStart;
+        
+        editor.value = newValue;
+        
+        editor.selectionStart = currentCursorPos - lengthDifference;
+        editor.selectionEnd = editor.selectionStart;
+    }
+});
+
+
+// --- LOAD MD FILE LOGIC ---
+
+// 1. Button click triggers the hidden file input
+btnLoad.addEventListener('click', () => {
+    // If the editor is closed, open it first
+    if (editor.classList.contains('hidden')) {
+        // We manually trigger the 'Create' action logic
+        viewer.classList.add('hidden');
+        editor.classList.remove('hidden');
+        btnCreate.textContent = 'Close';
+    }
+    // Then trigger the file selection dialog
+    fileInput.click(); 
+});
+
+// 2. File selection triggers the content loading function
+fileInput.addEventListener('change', loadMDFile);
