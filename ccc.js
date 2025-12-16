@@ -6,10 +6,10 @@ const btnSelect = document.getElementById('btn-select');
 const btnAmend = document.getElementById('btn-amend');
 const btnArchive = document.getElementById('btn-archive'); 
 
-// NEW: Load MD elements
+// --- NEW LOAD MD ELEMENTS ---
 const btnLoad = document.getElementById('btn-load');
 const fileInput = document.getElementById('file-input');
-// END NEW
+// --- END NEW ---
 
 const selectMenu = document.getElementById('select-menu');
 const amendMenu = document.getElementById('amend-menu');
@@ -54,7 +54,7 @@ const toggleMenu = (menuElement, associatedButton) => {
     focusEditor();
 };
 
-
+// --- NEW LOAD MD FILE FUNCTION ---
 /**
  * Loads content from a selected .md file into the text area.
  * This is triggered by the 'change' event on the hidden file input.
@@ -94,6 +94,7 @@ const loadMDFile = (event) => {
     
     focusEditor();
 };
+// --- END NEW LOAD MD FILE FUNCTION ---
 
 
 // --- SIMPLE MARKDOWN RENDERING FUNCTION (NOW USES TRAILING SPACES FOR <BR>) ---
@@ -469,7 +470,7 @@ editor.addEventListener('input', () => {
 });
 
 
-// --- LOAD MD FILE LOGIC ---
+// --- NEW LOAD MD FILE LOGIC ---
 
 // 1. Button click triggers the hidden file input
 btnLoad.addEventListener('click', () => {
