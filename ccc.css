@@ -108,15 +108,15 @@ body {
 #markdown-viewer {
     width: 90%;
     min-height: 200px;
-    padding: 15px;
-    margin: 20px auto;
+    padding: 5px;
+    margin: 10px auto;
     display: block;
     box-sizing: border-box;
     border: 1px solid #ccc;
     background-color: #f7f7f7; /* Light background for contrast */
     color: #333;
     font-size: 16px;
-    line-height: 1.6; 
+    line-height: 1; 
 }
 
 /* Basic Markdown element styling for the preview */
@@ -142,4 +142,31 @@ body {
 }
 .dock-button.success:active {
     background-color: #4cae4c;
+}
+
+/* Update existing heading rules to be aggressive */
+#markdown-viewer h1, #markdown-viewer h2, #markdown-viewer h3 {
+    margin-top: 0 !important;       /* FORCES TOP MARGIN TO ZERO */
+    margin-bottom: 10px !important;  /* Re-adds a necessary small margin below */
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Ensure ALL elements at the very top of the viewer are flush */
+#markdown-viewer > :first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Reduce top padding on the main viewer box (if needed) */
+#markdown-viewer {
+    padding-top: 5px !important; 
+}
+
+/* 10. LOAD MD BUTTON STYLE */
+.dock-button.secondary { 
+    background-color: #3b5998; /* Dark Blue for Load/Utility */
+}
+.dock-button.secondary:active {
+    background-color: #2d4373;
 }
