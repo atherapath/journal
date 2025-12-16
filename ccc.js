@@ -109,9 +109,13 @@ const renderMarkdown = (markdown) => {
     // 2. Basic Block processing (H1, H2, H3, Blockquote)
     html = html
         .replace(/^∆ (.*$)/gim, '<blockquote>$1</blockquote>') // Blockquotes (Your custom Delta symbol)
+        .replace(/^#### (.*$)/gim, '<h4>$1</h4>') // h4
         .replace(/^### (.*$)/gim, '<h3>$1</h3>') // h3
         .replace(/^## (.*$)/gim, '<h2>$2</h2>') // h2
         .replace(/^# (.*$)/gim, '<h1>$1</h1>'); // h1
+        .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+    
+
 
     // 3. Simple List processing (Must happen before inline tags)
     // NOTE: This must handle the remaining newline characters, \n, to correctly split lines.
