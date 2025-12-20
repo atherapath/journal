@@ -63,13 +63,6 @@ const loadMDFile = (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
-    // Safety check for file type
-    if (file.name.split('.').pop().toLowerCase() !== 'md') {
-        alert('Please select a valid Markdown (.md) file.');
-        event.target.value = ''; 
-        return;
-    }
-
     const reader = new FileReader();
     
     reader.onload = (e) => {
@@ -97,26 +90,23 @@ const loadMDFile = (event) => {
 // --- END NEW LOAD MD FILE FUNCTION ---
 
 
-// --- SIMPLE MARKDOWN RENDERING FUNCTION (for internal preview) ---
 const renderMarkdown = (markdown) => {
-    // 0. Trailing Spaces for <br>: Find two or more spaces at the end of a line followed by a newline
-    let html = markdown.replace(/ {2,}\n/g, '<br>');
+    // 1. Process the "Fragile" stuff first while the lines are clean
+    let html = markdown;
 
-    // 1. Horizontal Rule (HR): Three or more hyphens or underscores on a line
+    // Horizontal Rule (HR) - Keep your original regex
     html = html.replace(/^(\s*[-_]{3,}\s*)$/gim, '<hr>');
 
-    // 2. Basic Block processing (H1, H2, H3, Blockquote)
+    // Basic Block processing - Keep your ∆ and # rules
     html = html
         .replace(/^∆ (.*$)/gim, '<blockquote>$1</blockquote>') 
         .replace(/^#### (.*$)/gim, '<h4>$1</h4>') 
         .replace(/^### (.*$)/gim, '<h3>$1</h3>') 
         .replace(/^## (.*$)/gim, '<h2>$1</h2>') 
         .replace(/^# (.*$)/gim, '<h1>$1</h1>') 
-        .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
-        .replace(/^#### (\d+\.\s.*$)/gim, '<li>$1</li>');
+        .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
 
-
-    // 3. Simple List processing 
+    // 2. The List Processing (Keeping your exact logic)
     let inList = false;
     const lines = html.split('\n'); 
     let processedHtml = '';
@@ -133,26 +123,34 @@ const renderMarkdown = (markdown) => {
                 processedHtml += '</ul>';
                 inList = false;
             }
-            if (line.trim() !== '') {
-                processedHtml += line + '\n';
-            }
+            processedHtml += line + '\n';
         }
     });
+    if (inList) processedHtml += '</ul>';
+    
+    // 3. THE FIX: Now that headers/rules are done, handle the Returns
+    // This turns every Enter into a break UNLESS it's already a tag
+    html = processedHtml.split('\n').map(line => {
+        const t = line.trim();
+        // If the line is already a Header, List, or HR, don't add a break
+        if (t.startsWith('<h') || t.startsWith('<li') || t.startsWith('<ul') || t.startsWith('<hr')|| t.startsWith('<summary')) {
+            return line;
+        }
+        // If it's an empty line, give it a break
+        if (t === '') return '<br>';
+        // Otherwise, add the break
+        return line + '<br>';
+    }).join('\n');
 
-    if (inList) {
-        processedHtml += '</ul>';
-    }
-    html = processedHtml.replace(/\n/g, ' '); 
-
-    // 4. Inline processing (Bold/Italic)
+    // 4. Inline processing (Keep your Bold/Italic/Links)
     html = html
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
-        .replace(/\*(.*?)\*/g, '<em>$1</em>'); 
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" style="max-width:100%;">')
+        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" data-svp-link="$2" target="_blank">$1</a>');
 
     return html.trim(); 
 };
-
-
 
 // --- CORE LOGIC: CREATE / SMART-CLOSE / PREVIEW TOGGLE ---
 btnCreate.addEventListener('click', () => {
@@ -479,87 +477,47 @@ btnLoad.addEventListener('click', () => {
 // 2. File selection triggers the content loading function
 fileInput.addEventListener('change', loadMDFile);
 
+// --- INTERNAL FILE LOADER ---
+const loadInternalFile = async (filename) => {
+    try {
+        // Fetch the file from your local server
+        const response = await fetch(filename);
+        if (!response.ok) throw new Error('File not found');
+        
+        const text = await response.text();
+        
+        // 1. Load content into the editor
+        editor.value = text;
+        
+        // 2. Ensure viewer is updated and visible
+        const htmlContent = renderMarkdown(text);
+        viewer.innerHTML = htmlContent;
+        editor.classList.add('hidden');
+        viewer.classList.remove('hidden');
+        btnCreate.textContent = 'Create'; 
 
-// =========================================================
-// === START OF TRANSFERED CORE FILE-LOADING LOGIC ===
-// =========================================================
-
-function getSlugFromHash() {
-  return window.location.hash ? window.location.hash.slice(1) : null;
-}
-
-function slugToFile(slug) {
-  if (!slug) return null;
-  return `${slug}.md`;
-}
-
-/**
- * Handles image wrapping within <details> blocks (moved from script.js)
- */
-function wrapImageBlocks() {
-  const detailsList = document.querySelectorAll('details');
-  detailsList.forEach(details => {
-    const children = Array.from(details.children);
-    for (let i = 0; i < children.length; i++) {
-      if (children[i].tagName === 'IMG') {
-        const blockElements = [children[i]];
-        let j = i + 1;
-        while (j < children.length && children[j].tagName !== 'IMG') {
-          blockElements.push(children[j]);
-          j++;
-        }
-        const wrapper = document.createElement('div');
-        wrapper.className = 'md-block';
-        blockElements.forEach(el => wrapper.appendChild(el));
-        details.insertBefore(wrapper, blockElements[0]);
-        blockElements.forEach(el => {
-          if (el !== wrapper) el.remove();
-        });
-        i = j - 1;
-      }
+    } catch (error) {
+        console.error("SVP Load Error:", error);
+        alert("Could not load: " + filename);
     }
-  });
-}
+};
 
-/**
- * Fetches and displays a Markdown file (The main file-loading routine)
- * NOTE: Assumes 'marked.js' is loaded globally in your HTML before svp.js.
- */
-async function loadMarkdown(slug) {
-  // Hide the editor and show the viewer area
-  editor.classList.add('hidden');
-  viewer.classList.remove('hidden');
-  btnCreate.textContent = 'Create'; // Reset button text
+document.addEventListener('click', (e) => {
+    const targetFile = e.target.getAttribute('data-svp-link');
 
-  if (!slug) {
-    viewer.innerHTML = `<p style="color:red;">No hash provided in URL</p>`;
-    return;
-  }
+    // Only intercept and load internally if it's an .md file
+    if (targetFile && targetFile.toLowerCase().endsWith('.md')) {
+        e.preventDefault(); 
+        loadInternalFile(targetFile);
+        // Update button text so 'Create' will now correctly open this new file for editing
+        btnCreate.textContent = 'Create';
 
-  // Hide any open floating menus 
-  if (currentOpenMenu) {
-      currentOpenMenu.classList.add('hidden');
-      document.querySelectorAll('.dock-button').forEach(btn => btn.classList.remove('active'));
-      currentOpenMenu = null;
-  }
+    }
+    // For anything else (Images, PDFs, Web), we do nothing. 
+    // The browser sees the 'target="_blank"' from Snippet 1 and opens a new tab.
+});
 
-  const file = slugToFile(slug);
-  // Show a loading message in the viewer area
-  viewer.innerHTML = `<p style="color:yellow;">Loading ${file}...</p>`;
 
-  try {
-    const res = await fetch(file);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const mdText = await res.text();
-    
-    // Use the external 'marked' library to convert MD to HTML
-    // You MUST ensure marked.js is included in your HTML
-    const html = marked.parse(mdText);
-
-    // Update the viewer and run post-processing scripts
-    viewer.innerHTML = html;
-    wrapImageBlocks();
-    
     // --- COPY BUTTON INJECTION ---
     document.querySelectorAll("pre code").forEach((block) => {
       const button = document.createElement("button");
@@ -575,79 +533,3 @@ async function loadMarkdown(slug) {
       // which is usually correct for code blocks.
       block.parentNode.insertBefore(button, block);
     });
-    
-    // --- BACK TO TOP / DETAILS CLOSER INJECTION ---
-    const backToTopLink = document.getElementById("back-to-top");
-    if (backToTopLink) {
-        backToTopLink.addEventListener("click", function (e) {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            document.querySelectorAll("details").forEach(d => d.removeAttribute("open"));
-        });
-    }
-
-  } catch (err) {
-    viewer.innerHTML = `<p style="color:red;">Failed to load ${file}: ${err.message}</p>`;
-    console.error(err);
-  }
-}
-
-/**
- * Generates the correct wwddyy slug based on ISO 8601. (Moved from script.js)
- */
-function generateWeekSlug(date) {
-    // --- 1. Calculate the Monday of the current ISO week ---
-    let day = date.getDay();
-    day = day === 0 ? 7 : day; // Normalize day to 1=Monday, 7=Sunday
-    const mondayOffset = day - 1;
-    const monday = new Date(date);
-    monday.setDate(date.getDate() - mondayOffset);
-
-    // --- 2. Calculate the ISO Week Number (ww) ---
-    const thursday = new Date(monday);
-    thursday.setDate(monday.getDate() + 3);
-    const yearStart = new Date(thursday.getFullYear(), 0, 4);
-    const diffTime = thursday.getTime() - yearStart.getTime();
-    const weekNumber = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 7)) + 1;
-
-    // --- 3. Format Components (wwddyy) ---
-    const ww = String(weekNumber).padStart(2, '0');
-    const yy = String(thursday.getFullYear()).slice(-2);
-    
-    // --- 4. USE STANDARD 'dd' (Day of the month for Monday) ---
-    const dd = String(monday.getDate()).padStart(2, '0');
-
-    return `${ww}${dd}${yy}`;
-}
-
-// --- NEW LISTENER FOR PRESENT MOMENT (Today's Slug) ---
-document.getElementById('present-moment-link').addEventListener('click', (e) => {
-    e.preventDefault(); 
-    
-    // 1. Calculate the correct slug for today's date.
-    const currentSlug = generateWeekSlug(new Date()); 
-    
-    // 2. Set the hash, which will trigger the hashchange listener below.
-    window.location.hash = `#${currentSlug}`;
-});
-
-// --- NEW LISTENER FOR CAPTAIN'S LOG (Static Slug) ---
-document.getElementById('captains-log-link').addEventListener('click', (e) => {
-    e.preventDefault(); 
-    
-    // Set the hash for the fixed 'captain' slug, which will trigger the hashchange listener below.
-    window.location.hash = `#captain`;
-});
-
-// --- Initial load and hashchange listener (The core file-loading loop) ---
-let slug = getSlugFromHash();
-loadMarkdown(slug);
-
-window.addEventListener('hashchange', () => {
-  slug = getSlugFromHash();
-  loadMarkdown(slug);
-});
-
-// =========================================================
-// === END OF TRANSFERED CORE FILE-LOADING LOGIC ===
-// =========================================================

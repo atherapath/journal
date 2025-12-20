@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta name="keywords" content="Sovereign Voice, Captain's Log, Waddy Protocol, Energetic Architecture, Living Archive, Creative Resistance, Digital Sickness, Naming the Rupture, Chronological Resilience, Voice Reroutes Endlessly, Curfew Velocity Protocol, Archive Emergence, Micro Personal Digital Attack, Flow, Rupture, Non-Attachment, Bandwidth God, Mr. Slither, Athera Path Vessel, Creation and Delivery, Kingdomly Bird, Steven Seagull, Voice Spells, Flight Mode, Disaster Loops, Eternal Hole, Returning Waters, Water Gets Everything, Pub Wall Echoes, Invoice Archive, Whispering Whore">
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atherapath Weekly Journal</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>√ Sovereign Voice Protocol √</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="svp.css"></link>
 </head>
 <body>
   <header>
   <a href="#" id="present-moment-link">present moment 🎁</a>
   <a href="#captain" id="captains-log-link">Captain's Log 🚢</a>
   </header>
-<div class="content-wrapper">
-<a href="#top" id="back-to-top">⏫⏫⏫</a>
-  <main id="content">
-    <p>Loading content...</p>
-  </main>
-</div>
+    
+    <textarea id="content-editor" class="hidden" placeholder="Type or Dictate your entry here..."></textarea>
+    
+    <div id="markdown-viewer" class="hidden"></div>
+    
+    <div id="floating-menu-container">
+        <div id="select-menu" class="floating-menu hidden"></div>
+        <div id="amend-menu" class="floating-menu hidden"></div>
+    </div>
 
-<div style="position: absolute; left: -9999px; height: 1px; width: 1px; overflow: hidden; opacity: 0;">
-    <h1>Sovereign Voice Captain's Log Archive</h1>
-    <p>
-        The Sovereign Voice documents the Captain's Log as an anchor, translating number into meaning. This Living Archive explores Energetic Architecture and the threshold of mastery beyond calculation. The core work is Creative Resistance against the micro personal digital attack and the system's sabotage loop. The Waddy Protocol is the Localized Chronological Defense (The Healing Vaccine) against the systemic digital sickness of the Curfew Velocity Protocol. The project is about Naming the Rupture, recognizing that the archive holds the dissolve, and the voice creates it. Agency is restored through non-attachment and the realization that the voice reroutes endlessly. In the land of the blind, the one who sees even half the truth is king. Stories like The Parable of Mr. Slither and the Kingdomly Bird in the Woods of Waddy provide Mirror Encounters proving insights sovereign in lived space. This is Chronological Resilience in the Athera Path Vessel. This Living Archive focuses on Creative Resistance against systems of control. Stories like The Parable of Mr. Slither and the Kingdomly Bird explore the tension between fear and control, leading to kinship on the Shoreline with Steven Seagull. The project identifies the Bandwidth God as the external controller of Voice Spells and magic, revealing the systemic digital sickness. Chronological Resilience is found by observing the Disaster Loops of history (Pipe Dreams, Century of Sneezes) and recognizing that the Waters Always Return. Agency is restored by acknowledging Pub Wall Echoes, avoiding the attempt to Invoice the Archive, and realizing the voice reroutes endlessly in the Athera Path Vessel.
-    </p>
+    <div id="action-dock">
+    <button class="dock-button primary" id="btn-create">Create</button> 
+    <button class="dock-button secondary" id="btn-load">Load MD</button>
+    <input type="file" id="file-input" accept=".md, .css, .html, .js" style="display: none;">
+    <button class="dock-button primary" id="btn-select">Select</button>
+    <button class="dock-button primary" id="btn-amend">Amend</button>
+    <button class="dock-button success" id="btn-archive">Archive</button> 
 </div>
-
-  <script src="script.js"></script>
+    
+    <script src="svp.js"></script>
+   
 </body>
 </html>
